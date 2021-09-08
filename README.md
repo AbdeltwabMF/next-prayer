@@ -26,7 +26,14 @@ NextPrayer
 ## Usage
 
 ```
+> NextPrayer --nxt
+Midnight 11:54 PM
 
+> NextPrayer --adn
+1
+
+> NextPrayer --rem
+00:39
 ```
 
 ---
