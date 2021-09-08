@@ -44,6 +44,12 @@ Midnight 11:54 PM
   - `gawk`
   - `g++`
   - `bash`
+
+for Arch based systems:
+```
+sudo pacman -S gcc gawk python3 bash jq
+```
+
 ---
 
 ## [License](LICENSE)
