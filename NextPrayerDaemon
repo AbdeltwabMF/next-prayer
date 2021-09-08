@@ -1,12 +1,9 @@
 #!/bin/bash
 
+CUR_DIR=$(pwd)
 NP_DATA_DIR="$HOME"/.local/share/Next-Prayer/calendar
 NP_TEMP_DIR=/tmp/Next-Prayer
 ICON="🕌"
-
-case $BLOCK_BUTTON in
-    1) notify-send "As-Salah" "The remaining time till $NextTime is $Remains";;
-esac
 
 fetch_next_day() {
   CUR_MONTH=$(date "+%_m" | awk '{print $1}')
@@ -28,18 +25,18 @@ fetch_next_day() {
 
 get_output() {
   echo $(echo "$1" | awk -F: '{hrs = $1; mod = hrs % 12; mer = "AM"; if(mod == 10 || mod == 0 || mod == 11) {
-  if(hrs >= 12) mer = "PM"; if(hrs == 0) hrs = 12; print hrs ":" $2, mer;} else { print "0" mod ":" $2, mer}}')
+  if(hrs >= 12) mer = "PM"; if(hrs == 0) mod = 12; print mod ":" $2, mer;} else { print "0" mod ":" $2, mer}}')
 }
 
-! [[ -e "$NP_TEMP_DIR"/timings ]] && fetch_next_day
+! [[ -e "$NP_TEMP_DIR"/timings ]] || [  $(cat "$NP_TEMP_DIR"/timings | wc -l) -lt 8 ] && fetch_next_day
 
 CUR_TIME=$(date "+%H:%M")
 
 cat "$NP_TEMP_DIR"/timings > "$NP_TEMP_DIR"/input
 echo "$CUR_TIME  A" >> "$NP_TEMP_DIR"/input
-FindNextPrayer < "$NP_TEMP_DIR"/input
 
-[ -z "$NP_TEMP_DIR"/output ] && exit 1
+"$CUR_DIR"/FindNextPrayer < "$NP_TEMP_DIR"/input
+
 
 NextTime=$(cat "$NP_TEMP_DIR"/output | awk '/NextPrayer/ {print $2}')
 When=$(cat "$NP_TEMP_DIR"/output | awk '/NextPrayer/ {print $3}')
@@ -48,6 +45,10 @@ AdhanTime=$(cat "$NP_TEMP_DIR"/output | awk '/AdhanTime/ {print $2}')
 FetchNextDay=$(cat "$NP_TEMP_DIR"/output | awk '/FetchNextDay/ {print $2}')
 
 [[ $FetchNextDay -eq 1 ]] && fetch_next_day
-[[ $AdhanTime -eq 1 ]] && notify-send "As-Salah" "It's time for $NextTime"
+[[ $AdhanTime -eq 1 ]] && notify-send "Next Prayer" "It's time for $NextTime"
 
 echo "$ICON $NextTime $(get_output $When)"
+
+case $BLOCK_BUTTON in
+    1) notify-send "Next Prayer" "Time till $NextTime $Remains";;
+esac
