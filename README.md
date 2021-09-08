@@ -1,6 +1,15 @@
 # Next Prayer
 
-Showing the time for the next Islamic prayer.
+The whole purpose of this script is to tell us what is the time of the next prayer.
+however, the script capable to be extended.
+in the current version for example it can do:
+
+```
+  --rem           Remaining time till the next prayer
+  --nxt           The name and the time for the next prayer
+  --adn           Is it time for adhan or not by returning binary value(0, 1)
+  --help, -h      Showing this info
+```
 
 ---
 
@@ -12,6 +21,13 @@ cd Next-Prayer
 ./install
 NextPrayer
 ```
+---
+
+## Usage
+
+```
+
+```
 
 ---
 
@@ -19,7 +35,8 @@ NextPrayer
   - `jq`
   - `python3`
   - `gawk`
-
+  - `g++`
+  - `bash`
 ---
 
 ## [License](LICENSE)
