@@ -4,8 +4,8 @@ NP_DATA_DIR="$HOME"/.local/share/Next-Prayer/calendar
 NP_TEMP_DIR=/tmp/Next-Prayer
 
 fetch_next_day() {
-  CUR_MONTH=$(date "+%_m" | awk '{print $1}')
-  CUR_DAY=$(date "+%_d" | awk '{print $1}')
+  CUR_MONTH=$(date "+%_m" | gawk '{print $1}')
+  CUR_DAY=$(date "+%_d" | gawk '{print $1}')
 
   mkdir -p "$NP_TEMP_DIR"
 
