@@ -24,7 +24,7 @@ fetch_next_day() {
 }
 
 get_output() {
-  echo $(echo "$1" | awk -F: '{hrs = $1; mod = hrs % 12; mer = "AM"; if(mod == 10 || mod == 0 || mod == 11) {
+  echo $(echo "$1" | gawk -F: '{hrs = $1; mod = hrs % 12; mer = "AM"; if(mod == 10 || mod == 0 || mod == 11) {
   if(hrs >= 12) mer = "PM"; if(hrs == 0) mod = 12; print mod ":" $2, mer;} else { print "0" mod ":" $2, mer}}')
 }
 
@@ -38,11 +38,11 @@ echo "$CUR_TIME  A" >> "$NP_TEMP_DIR"/input
 "$CUR_DIR"/FindNextPrayer < "$NP_TEMP_DIR"/input
 
 
-NextTime=$(cat "$NP_TEMP_DIR"/output | awk '/NextPrayer/ {print $2}')
-When=$(cat "$NP_TEMP_DIR"/output | awk '/NextPrayer/ {print $3}')
-Remains=$(cat "$NP_TEMP_DIR"/output | awk '/Remains/ {print $2}')
-AdhanTime=$(cat "$NP_TEMP_DIR"/output | awk '/AdhanTime/ {print $2}')
-FetchNextDay=$(cat "$NP_TEMP_DIR"/output | awk '/FetchNextDay/ {print $2}')
+NextTime=$(cat "$NP_TEMP_DIR"/output | gawk '/NextPrayer/ {print $2}')
+When=$(cat "$NP_TEMP_DIR"/output | gawk '/NextPrayer/ {print $3}')
+Remains=$(cat "$NP_TEMP_DIR"/output | gawk '/Remains/ {print $2}')
+AdhanTime=$(cat "$NP_TEMP_DIR"/output | gawk '/AdhanTime/ {print $2}')
+FetchNextDay=$(cat "$NP_TEMP_DIR"/output | gawk '/FetchNextDay/ {print $2}')
 
 [[ $FetchNextDay -eq 1 ]] && fetch_next_day
 [[ $AdhanTime -eq 1 ]] && notify-send "Next Prayer" "It's time for $NextTime"

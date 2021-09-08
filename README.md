@@ -4,14 +4,18 @@ Showing the time for the next Islamic prayer.
 
 ---
 
-## installation
-`./install`
+## Installation
 
-`NextPrayerDaemon`
+```
+git clone https://github.com/AbdeltwabMF/Next-Prayer.git
+cd Next-Prayer
+./install
+NextPrayer
+```
 
 ---
 
-## dependencies
+## Dependencies
   - `jq`
   - `python3`
   - `gawk`
