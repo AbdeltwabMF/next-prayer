@@ -1,6 +1,6 @@
 # Next Prayer
 
-The whole purpose of this script is to tell us what is the time of the next prayer.
+The main purpose of this script is to tell us what is the time of the next prayer.
 however, the script capable to be extended.
 in the current version for example it can do:
 
