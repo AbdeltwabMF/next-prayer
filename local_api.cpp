@@ -25,8 +25,8 @@ void fast() {
 }
 
 void file() {
-  freopen("/tmp/Next-Prayer/input", "r", stdin);
-  freopen("/tmp/Next-Prayer/output", "w", stdout);
+  freopen("/tmp/nxprayer/input", "r", stdin);
+  freopen("/tmp/nxprayer/output", "w", stdout);
 }
 
 class compare {
@@ -44,49 +44,41 @@ const int TEN = 10;
 indexed_set <pair<string, string>, compare> mawaqeet;
 string sf, ss;
 int cur_inx = -1;
-pair <string, string> cur, nxt, lst;
+pair <string, string> cur, nxt;
 
-pair <string, string> next_prayer() {
-  return *mawaqeet.find_by_order(((int)mawaqeet.order_of_key(cur) + 1) % 10);
+pair <string, string>
+next_prayer() {
+  return *mawaqeet.find_by_order(((int)mawaqeet.order_of_key(cur) + 1) % int(mawaqeet.size()));
 }
 
-bool adhan_now() {
+bool
+adhan_now() {
   return (cur.second == nxt.second);
 }
 
-bool fetch_next() {
-  return (cur.second == lst.second);
+bool
+fetch_next() {
+  return (cur.second == "00:00");
 }
 
-void read_data() {
-  for(int i = 0; i < 10; ++i) {
-    cin >> ss >> sf;
-    mawaqeet.insert(make_pair(sf, ss));
-
-    if(sf == "A")
-      cur = make_pair(sf, ss);
-    if(sf == "Midnight")
-      lst = make_pair(sf, ss);
-  }
-}
-
-pair <int, int> converto_int(string &x) {
+pair <int, int>
+converto_int(string &x) {
   assert((int)x.size() == 5);
-
   int hrs = (x[0] - '0') * TEN + (x[1] - '0');
   int mns = (x[3] - '0') * TEN + (x[4] - '0');
 
   return make_pair(hrs, mns);
 }
 
-string difference() {
+string
+difference() {
   string ret = "";
 
   int chrs, cmns, nhrs, nmns, rhrs, rmns;
   tie(chrs, cmns) = converto_int(cur.second);
   tie(nhrs, nmns) = converto_int(nxt.second);
 
-  if(chrs > nhrs)	nhrs += 24;
+  if(chrs > nhrs) nhrs += 24;
   if(cmns > nmns) nmns += 60, --nhrs;
 
   rhrs = nhrs - chrs;
@@ -101,6 +93,16 @@ string difference() {
   return ret;
 }
 
+void
+read_data() {
+  while(cin >> ss >> sf) {
+    mawaqeet.insert(make_pair(sf, ss));
+
+    if(sf == "A")
+      cur = make_pair(sf, ss);
+  }
+}
+
 int main () {
   fast();
   file();
@@ -108,8 +110,8 @@ int main () {
   read_data();
   nxt = next_prayer();
 
-  cout << "NextPrayer " <<  nxt.first << " " << nxt.second << endl;
-  cout << "Remains " << difference() << endl;
-  cout << "AdhanTime " << adhan_now() << endl;
-  cout << "FetchNextDay " << fetch_next() << endl;
+  cout << "nxprayer 		" << nxt.first 		<< " " << nxt.second << endl;
+  cout << "remains			" << difference() << endl;
+  cout << "adhantime		" << adhan_now() 	<< endl;
+  cout << "fetchnextday	" << fetch_next() << endl;
 }
