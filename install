@@ -56,4 +56,3 @@ python3 "$CUR_DIR"/FetchWholeYear.py
 
 ln -s "$CUR_DIR"/NextPrayerDaemon "$NP_BINR_DIR"/NextPrayerDaemon
 ln -s "$CUR_DIR"/FindNextPrayer "$NP_BINR_DIR"/FindNextPrayer
-ln -s "$CUR_DIR"/FetchNextDay "$NP_BINR_DIR"/FetchNextDay
