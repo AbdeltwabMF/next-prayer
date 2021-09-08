@@ -2,7 +2,6 @@
 
 NP_DATA_DIR="$HOME"/.local/share/Next-Prayer/calendar
 NP_TEMP_DIR=/tmp/Next-Prayer
-ICON="🕌"
 
 fetch_next_day() {
   CUR_MONTH=$(date "+%_m" | awk '{print $1}')
@@ -46,7 +45,12 @@ FetchNextDay=$(cat "$NP_TEMP_DIR"/output | gawk '/FetchNextDay/ {print $2}')
 [[ $FetchNextDay -eq 1 ]] && fetch_next_day
 [[ $AdhanTime -eq 1 ]] && notify-send "Next Prayer" "It's time for $NextTime"
 
-echo "$ICON $NextTime $(get_output $When)"
+case "$1" in
+  "--rem") echo "$Remains";;
+  "--adn") echo "$AdhanTime";;
+  "--help"|"-h") printf "%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n%s\t%s\n" "Next Prayer" "--rem" "Remaining time till the next prayer" "--nxt" "The name and the time for the next prayer" "--adn" "Is it time for adhan or not by returning binary value(0, 1)" "--help, -h" "Showing this info";;
+  "--nxt"|*) echo "$NextTime $(get_output $When)";;
+esac
 
 case $BLOCK_BUTTON in
     1) notify-send "Next Prayer" "Time till $NextTime $Remains";;
