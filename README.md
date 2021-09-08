@@ -39,11 +39,7 @@ Midnight 11:54 PM
 ---
 
 ## Dependencies
-  - `jq`
-  - `python3`
-  - `gawk`
-  - `g++`
-  - `bash`
+ `jq` `python3` `gawk` `g++` `bash`
 
 for Arch based systems:
 ```
