@@ -1,10 +1,13 @@
 #!/bin/bash
 
 NP_TEMP_DIR=/tmp/Next-Prayer
+ICON="🕌"
+
+case $BLOCK_BUTTON in
+    1) notify-send "As-Salah" "The remaining time till $NextTime is $Remains";;
+esac
 
 ! [[ -e "$NP_TEMP_DIR"/timings ]] && FetchNextDay
-
-ICON="🕌"
 
 get_output() {
   echo $(echo "$1" | awk -F: '{hrs = $1; mod = hrs % 12; mer = "AM"; if(mod == 10 || mod == 0 || mod == 11) {
@@ -27,7 +30,3 @@ FetchNextDay=$(cat "$NP_TEMP_DIR"/output | awk '/FetchNextDay/ {print $2}')
 [[ $AdhanTime -eq 1 ]] && notify-send "As-Salah" "It's time for $NextTime"
 
 echo "$ICON $NextTime $(get_output $When)"
-
-case $BLOCK_BUTTON in
-    1) notify-send "As-Salah" "The remaining time till $NextTime is $Remains";;
-esac
