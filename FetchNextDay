@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# dirs
+NP_DATA_DIR="$HOME"/.local/share/Next-Prayer/calendar
+NP_TEMP_DIR=/tmp/Next-Prayer
+
+CUR_MONTH=$(date "+%_m" | awk '{print $1}')
+CUR_DAY=$(date "+%_d" | awk '{print $1}')
+
+mkdir -p "$NP_TEMP_DIR"
+
+# cached data processing
+cat "$NP_DATA_DIR/$CUR_MONTH/$CUR_DAY" | jq '.["timings"]' > "$NP_TEMP_DIR"/timings
+cat "$NP_DATA_DIR/$CUR_MONTH/$CUR_DAY" | jq '.["date"]' > "$NP_TEMP_DIR"/hijri
+
+sed -i "s/ (EET)\|\"\|{\|}\|,//g" "$NP_TEMP_DIR"/timings
+gawk -i inplace -F': ' 'NF {print $2 $1}' "$NP_TEMP_DIR"/timings
+
+
+sed -i "s/{\|}\|\"\|,\|\ //g; /^[^de].*$/d; /^\s*$/d; s/^.*://g; s/-..-/ /g" "$NP_TEMP_DIR"/hijri
+gawk -i inplace 'NR == 2 {print l "." $0 "." r} {l = $1; r = $2}' "$NP_TEMP_DIR"/hijri
