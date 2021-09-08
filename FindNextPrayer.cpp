@@ -44,7 +44,7 @@ const int TEN = 10;
 indexed_set <pair<string, string>, compare> mawaqeet;
 string sf, ss;
 int cur_inx = -1;
-pair <string, string> cur, nxt, lst;
+pair <string, string> cur, nxt;
 
 pair <string, string> next_prayer() {
   return *mawaqeet.find_by_order(((int)mawaqeet.order_of_key(cur) + 1) % 10);
@@ -55,18 +55,15 @@ bool adhan_now() {
 }
 
 bool fetch_next() {
-  return (cur.second == lst.second);
+  return (cur.second == "12:00");
 }
 
 void read_data() {
-  for(int i = 0; i < 10; ++i) {
-    cin >> ss >> sf;
+  while(cin >> ss >> sf) {
     mawaqeet.insert(make_pair(sf, ss));
 
     if(sf == "A")
       cur = make_pair(sf, ss);
-    if(sf == "Midnight")
-      lst = make_pair(sf, ss);
   }
 }
 
