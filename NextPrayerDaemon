@@ -6,6 +6,11 @@ NP_TEMP_DIR=/tmp/Next-Prayer
 
 ICON="🕌"
 
+get_output() {
+  echo $(echo "$1" | awk -F: '{hrs = $1; mod = hrs % 12; mer = "AM"; if(mod == 10 || mod == 0 || mod == 11) {
+  if(hrs >= 12) mer = "PM"; if(hrs == 0) hrs = 12; print hrs ":" $2, mer;} else { print "0" mod ":" $2, mer}}')
+}
+
 CUR_TIME=$(date "+%H:%M")
 
 cat "$NP_TEMP_DIR"/timings > "$NP_TEMP_DIR"/input
@@ -19,6 +24,10 @@ AdhanTime=$(cat "$NP_TEMP_DIR"/output | awk '/AdhanTime/ {print $2}')
 FetchNextDay=$(cat "$NP_TEMP_DIR"/output | awk '/FetchNextDay/ {print $2}')
 
 [[ $FetchNextDay -eq 1 ]] && FetchNextDay
-[[ $AdhanTime -eq 1 ]] && notify-send "As-Salah" "It's the time for $NextTime"
+[[ $AdhanTime -eq 1 ]] && notify-send "As-Salah" "It's time for $NextTime"
 
-echo "$ICON $NextTime $When"
+echo "$ICON $NextTime $(get_output $When)"
+
+case $BLOCK_BUTTON in
+    1) notify-send "As-Salah" "The remaining time till $NextTime is $Remains";;
+esac
