@@ -52,7 +52,7 @@ mkdir -p "$NP_DATA_DIR"/calendar/{1..12} && mkdir -p "$NP_CNFG_DIR" || exit 1
 python3 "$CUR_DIR"/FetchWholeYear.py
 
 # compile the cpp file
-# g++ "$CUR_DIR"/FindNextPrayer.cpp -o "$CUR_DIR"/FindNextPrayer
+g++ "$CUR_DIR"/FindNextPrayer.cpp -o "$CUR_DIR"/FindNextPrayer
 
 ln -s "$CUR_DIR"/NextPrayer "$NP_BINR_DIR"/NextPrayer
 ln -s "$CUR_DIR"/FindNextPrayer "$NP_BINR_DIR"/FindNextPrayer
