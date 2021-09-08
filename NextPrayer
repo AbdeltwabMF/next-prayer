@@ -33,7 +33,7 @@ CUR_TIME=$(date "+%H:%M")
 cat "$NP_TEMP_DIR"/timings > "$NP_TEMP_DIR"/input
 echo "$CUR_TIME  A" >> "$NP_TEMP_DIR"/input
 
-FindNextPrayer < "$NP_TEMP_DIR"/input
+FindNextPrayer
 
 
 NextTime=$(cat "$NP_TEMP_DIR"/output | gawk '/NextPrayer/ {print $2}')
