@@ -27,7 +27,7 @@ with urlopen(root_url + "latitude=" + pms["latitude"] + "&longitude=" + pms["lon
 if calender["status"] == "OK":
     pass
 else:
-    print("Oops.. something went wrong.")
+    print("Oops.. something went wrong!")
     exit(0)
 
 year = []
