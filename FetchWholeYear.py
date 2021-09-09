@@ -15,7 +15,7 @@ root_url = "http://api.aladhan.com/v1/calendar?"
 if os.path.exists(params_path):
     pass
 else:
-    print("Error: run the 'fetch-calendar' first.")
+    print("Error: run the 'install' first.")
     exit(0)
 
 with open(params_path) as f:
