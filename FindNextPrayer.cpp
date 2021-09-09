@@ -55,7 +55,7 @@ bool adhan_now() {
 }
 
 bool fetch_next() {
-  return (cur.second == "12:00");
+  return (cur.second == "00:00");
 }
 
 void read_data() {
@@ -83,7 +83,7 @@ string difference() {
   tie(chrs, cmns) = converto_int(cur.second);
   tie(nhrs, nmns) = converto_int(nxt.second);
 
-  if(chrs > nhrs)	nhrs += 24;
+  if(chrs > nhrs) nhrs += 24;
   if(cmns > nmns) nmns += 60, --nhrs;
 
   rhrs = nhrs - chrs;

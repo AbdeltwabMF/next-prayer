@@ -35,7 +35,6 @@ echo "$CUR_TIME  A" >> "$NP_TEMP_DIR"/input
 
 FindNextPrayer
 
-
 NextTime=$(cat "$NP_TEMP_DIR"/output | gawk '/NextPrayer/ {print $2}')
 When=$(cat "$NP_TEMP_DIR"/output | gawk '/NextPrayer/ {print $3}')
 Remains=$(cat "$NP_TEMP_DIR"/output | gawk '/Remains/ {print $2}')
