@@ -18,7 +18,7 @@ fetch_next_day() {
 
 
   sed -i "s/{\|}\|\"\|,\|\ //g; /^[^de].*$/d; /^\s*$/d; s/^.*://g; s/-..-/ /g" "$NP_TEMP_DIR"/hijri
-  gawk -i inplace 'NR == 2 {print l "." $0 "." r} {l = $1; r = $2}' "$NP_TEMP_DIR"/hijri
+  gawk -i inplace 'NR == 2 {print l "." $0 "." r} {l = $1; r = $2 - 1400;}' "$NP_TEMP_DIR"/hijri
 }
 
 get_output() {
@@ -48,7 +48,7 @@ case "$1" in
   "--rem") echo "$Remains";;
   "--adn") echo "$AdhanTime";;
   "--help"|"-h") printf "%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n%s\t%s\n" "Next Prayer" "--rem" "Remaining time till the next prayer" "--nxt" "The name and the time for the next prayer" "--adn" "Is it time for adhan or not by returning binary value(0, 1)" "--help, -h" "Showing this info";;
-  "--nxt"|*) echo "$NextTime $(get_output $When)";;
+  "--nxt"|*) echo "🕌 $NextTime $(get_output $When)";;
 esac
 
 case $BLOCK_BUTTON in
