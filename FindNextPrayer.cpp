@@ -47,7 +47,7 @@ int cur_inx = -1;
 pair <string, string> cur, nxt;
 
 pair <string, string> next_prayer() {
-  return *mawaqeet.find_by_order(((int)mawaqeet.order_of_key(cur) + 1) % 10);
+  return *mawaqeet.find_by_order(((int)mawaqeet.order_of_key(cur) + 1) % 9);
 }
 
 bool adhan_now() {
@@ -58,18 +58,9 @@ bool fetch_next() {
   return (cur.second == "00:00");
 }
 
-void read_data() {
-  while(cin >> ss >> sf) {
-    mawaqeet.insert(make_pair(sf, ss));
-
-    if(sf == "A")
-      cur = make_pair(sf, ss);
-  }
-}
-
 pair <int, int> converto_int(string &x) {
+  cout << x << endl;
   assert((int)x.size() == 5);
-
   int hrs = (x[0] - '0') * TEN + (x[1] - '0');
   int mns = (x[3] - '0') * TEN + (x[4] - '0');
 
@@ -96,6 +87,15 @@ string difference() {
   ret += to_string(rmns);
 
   return ret;
+}
+
+void read_data() {
+  while(cin >> ss >> sf) {
+    mawaqeet.insert(make_pair(sf, ss));
+
+    if(sf == "A")
+      cur = make_pair(sf, ss);
+  }
 }
 
 int main () {
