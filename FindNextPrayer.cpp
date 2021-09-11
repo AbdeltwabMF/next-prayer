@@ -59,7 +59,6 @@ bool fetch_next() {
 }
 
 pair <int, int> converto_int(string &x) {
-  cout << x << endl;
   assert((int)x.size() == 5);
   int hrs = (x[0] - '0') * TEN + (x[1] - '0');
   int mns = (x[3] - '0') * TEN + (x[4] - '0');
