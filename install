@@ -54,5 +54,5 @@ python3 "$CUR_DIR"/FetchWholeYear.py
 # compile the cpp file
 g++ "$CUR_DIR"/FindNextPrayer.cpp -o "$CUR_DIR"/FindNextPrayer
 
-ln -s "$CUR_DIR"/NextPrayer "$NP_BINR_DIR"/NextPrayer
-ln -s "$CUR_DIR"/FindNextPrayer "$NP_BINR_DIR"/FindNextPrayer
+cp "$CUR_DIR"/NextPrayer "$NP_BINR_DIR"/NextPrayer
+cp "$CUR_DIR"/FindNextPrayer "$NP_BINR_DIR"/FindNextPrayer
