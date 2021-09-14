@@ -25,13 +25,13 @@ cd Next-Prayer
 ## Usage
 
 ```
-$ NextPrayer --n
+$ NextPrayer -n
 Midnight 11:54 PM
 
-$ NextPrayer --d
+$ NextPrayer -d
 0
 
-$ NextPrayer --r
+$ NextPrayer -r
 00:39
 ```
 
