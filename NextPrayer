@@ -42,7 +42,7 @@ AdhanTime=$(cat "$NP_TEMP_DIR"/output | gawk '/AdhanTime/ {print $2}')
 FetchNextDay=$(cat "$NP_TEMP_DIR"/output | gawk '/FetchNextDay/ {print $2}')
 
 [[ $FetchNextDay -eq 1 ]] && fetch_next_day
-[[ $AdhanTime -eq 1 ]] && notify-send "Next Prayer" "It's time for $NextTime"
+[[ $AdhanTime -eq 1 ]] && notify-send -t 5000 "Next Prayer" "It's time for $NextTime"
 
 case "$1" in
   "--rem"|"-r") echo "$Remains";;
@@ -52,5 +52,5 @@ case "$1" in
 esac
 
 case $BLOCK_BUTTON in
-    1) notify-send "Next Prayer" "Time till $NextTime $Remains";;
+    1) notify-send -t 5000 "Next Prayer" "Time till $NextTime $Remains";;
 esac
