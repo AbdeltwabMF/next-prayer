@@ -25,8 +25,8 @@ void fast() {
 }
 
 void file() {
-  freopen("/tmp/Next-Prayer/input", "r", stdin);
-  freopen("/tmp/Next-Prayer/output", "w", stdout);
+  freopen("/tmp/nxprayer/input", "r", stdin);
+  freopen("/tmp/nxprayer/output", "w", stdout);
 }
 
 class compare {
@@ -104,8 +104,8 @@ int main () {
   read_data();
   nxt = next_prayer();
 
-  cout << "NextPrayer " <<  nxt.first << " " << nxt.second << endl;
-  cout << "Remains " << difference() << endl;
-  cout << "AdhanTime " << adhan_now() << endl;
-  cout << "FetchNextDay " << fetch_next() << endl;
+  cout << "nxprayer " <<  nxt.first << " " << nxt.second << endl;
+  cout << "remains " << difference() << endl;
+  cout << "adhantime " << adhan_now() << endl;
+  cout << "fetchnextday " << fetch_next() << endl;
 }
