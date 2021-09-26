@@ -9,7 +9,7 @@ FLAGS:
   -r,	--remain	Remaining time till the next prayer
   -n,	--next		The name and the time for the next prayer
   -d,	--adhan		Is it time for adhan or not by returning binary value(0, 1)
-  -h,	--help	Showing this info
+  -h,	--help		Showing this info
 ```
 
 ---
