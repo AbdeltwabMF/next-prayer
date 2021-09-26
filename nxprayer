@@ -48,7 +48,7 @@ FetchNextDay=$(cat "$TEMP_DIR"/output | gawk '/fetchnextday/ {print $2}')
 case "$1" in
   "--remain"|"-r") echo "$Remains";;
   "--adhan"|"-d") echo "$AdhanTime";;
-  "--help"|"-h") printf "%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n" "Next Prayer" "-r, --remain" "Remaining time till the next prayer" "-n, --next" "The name and the time for the next prayer" "-d, --adhan" "Is it time for adhan or not by returning binary value(0, 1)" "-h, --help" "Showing this info";;
+  "--help"|"-h") printf "%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n" "Flags:" "-r, --remain" "Remaining time till the next prayer" "-n, --next" "The name and the time for the next prayer" "-d, --adhan" "Is it time for adhan or not by returning binary value(0, 1)" "-h, --help" "Showing this info";;
   "--next"|"-n"|*) echo "🕌 $NextTime $(get_output $When)";;
 esac
 
