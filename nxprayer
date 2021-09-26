@@ -43,15 +43,15 @@ AdhanTime=$(cat "$TEMP_DIR"/output | gawk '/adhantime/ {print $2}')
 FetchNextDay=$(cat "$TEMP_DIR"/output | gawk '/fetchnextday/ {print $2}')
 
 [[ $FetchNextDay -eq 1 ]] && fetch_next_day
-[[ $AdhanTime -eq 1 ]] && notify-send -t 10000 "Next Prayer" "It's time for $NextTime"
+[[ $AdhanTime -eq 1 ]] && notify-send "Next Prayer" "It's time for $NextTime"
+
+case $BLOCK_BUTTON in
+	1) notify-send "Next Prayer" "Time till $NextTime $Remains";;
+esac
 
 case "$1" in
   "--remain"|"-r") echo "$Remains";;
   "--adhan"|"-d") echo "$AdhanTime";;
   "--help"|"-h") printf "%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n" "Flags:" "-r, --remain" "Remaining time till the next prayer" "-n, --next" "The name and the time for the next prayer" "-d, --adhan" "Is it time for adhan or not by returning binary value(0, 1)" "-h, --help" "Showing this info";;
-  "--next"|"-n"|*) echo "🕌 $NextTime $(get_output $When)";;
-esac
-
-case $BLOCK_BUTTON in
-	1) notify-send -t 10000 "Next Prayer" "Time till $NextTime $Remains";;
+  "--next"|"-n"|*) echo "🕌 $NextTime $(get_output "$When")";;
 esac
