@@ -1,0 +1,14 @@
+{
+	"IGNOREME":"any key with capital letters just ignore it",
+	"APISOURCE":"https://aladhan.com/prayer-times-api",
+	"latCOMMENT":"Replace latitude with your location latitude (default = 30.052816227561923)[cairo]",
+	"latitude":"27.494142697334386",
+	"lonCOMMENT":"Replace longitude with your location longitude (default = 31.230651905820896)[cairo]",
+	"longitude":"30.869780209307066",
+	"metCOMMENT":"5 - Egyptian General Authority of Survey",
+	"method":"5",
+	"month":"1",
+	"adjustment":"1",
+	"annual":"true",
+	"year":"2021"
+}

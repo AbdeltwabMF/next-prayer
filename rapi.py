@@ -8,14 +8,14 @@ home = os.path.expanduser("~")
 params_path = home
 data_path = home
 
-params_path += "/.config/Next-Prayer/params.json"
-data_path += "/.local/share/Next-Prayer/calendar"
+params_path += "/.config/nxprayer/params.json"
+data_path += "/.local/share/nxprayer/calendar"
 root_url = "http://api.aladhan.com/v1/calendar?"
 
 if os.path.exists(params_path):
     pass
 else:
-    print("Error: run the 'install' first.")
+    print("Error: run the 'Makefile'.")
     exit(0)
 
 with open(params_path) as f:

@@ -1,14 +1,15 @@
-# Next Prayer
+# Next Prayer (nxprayer)
 
 The main purpose of this script is to tell us what is the time of the next prayer.
-however, the script capable to be extended.
-in the current version for example it can do:
+However, the script capable to be extended.
+In the current version for example it can do:
 
 ```
-  --rem, -r	Remaining time till the next prayer
-  --nxt, -n	The name and the time for the next prayer
-  --adn, -d	Is it time for adhan or not by returning binary value(0, 1)
-  --help, -h	Showing this info
+FLAGS:
+  -r,	--remain	Remaining time till the next prayer
+  -n,	--next		The name and the time for the next prayer
+  -d,	--adhan		Is it time for adhan or not by returning binary value(0, 1)
+  -h,	--help	Showing this info
 ```
 
 ---
@@ -16,22 +17,22 @@ in the current version for example it can do:
 ## Installation
 
 ```
-git clone https://github.com/AbdeltwabMF/Next-Prayer.git
-cd Next-Prayer
-./install
+git clone https://github.com/AbdeltwabMF/nxprayer.git
+cd nxprayer
+make clean install
 ```
 ---
 
 ## Usage
 
 ```
-$ NextPrayer -n
+$ nxprayer -next
 Midnight 11:54 PM
 
-$ NextPrayer -d
+$ nxprayer -adhan
 0
 
-$ NextPrayer -r
+$ nxprayer -remain
 00:39
 ```
 
