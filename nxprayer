@@ -53,5 +53,5 @@ case "$1" in
 esac
 
 case $BLOCK_BUTTON in
-    1) notify-send -t 10000 "Next Prayer" "Time till $NextTime $Remains";;
+	1) notify-send -t 10000 "Next Prayer" "Time till $NextTime $Remains";;
 esac

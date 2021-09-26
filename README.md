@@ -38,6 +38,11 @@ $ nxprayer -remain
 
 ---
 
+## screenshot
+![np](np.png)
+
+---
+
 ## Dependencies
  `jq` `python3` `gawk` `g++` `bash` `libnotify`
 
