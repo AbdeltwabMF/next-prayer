@@ -38,7 +38,7 @@ $ nxprayer -remain
 
 ---
 
-## screenshot
+## Screenshot
 ![np](np.png)
 
 ---
