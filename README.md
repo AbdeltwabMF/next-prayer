@@ -42,13 +42,12 @@ If you are using [dwmblocks](https://github.com/torrinfail/dwmblocks) or [i3bloc
 
 ---
 
-## Dependencies
+## Installation
+
+##### Dependencies
 
 `jq` `python3` `gawk` `gcc` `bash` `libnotify`
 
----
-
-## Installation
 
 ##### For Arch based systems, the package in the `AUR`:
 
