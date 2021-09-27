@@ -5,9 +5,9 @@ Show me the time of the next `Islamic prayer`.
 ---
 
 ## Features
-	- showing the `next prayer time`.
-	- `send notification` if it's the time for a prayer.
-	- showing the `remaining time` till the next prayer.
+- showing the `next prayer time`.
+- `send notification` if it's the time for a prayer.
+- showing the `remaining time` till the next prayer.
 
 ---
 
