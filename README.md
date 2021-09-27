@@ -1,16 +1,13 @@
 # Next Prayer (nxprayer)
 
-The main purpose of this script is to tell us what is the time of the next prayer.
-However, the script capable to be extended.
-In the current version for example it can do:
+Show me the time of the next `Islamic prayer`.
 
-```
-FLAGS:
-  -r,	--remain	Remaining time till the next prayer
-  -n,	--next		The name and the time for the next prayer
-  -d,	--adhan		Is it time for adhan or not by returning binary value(0, 1)
-  -h,	--help		Showing this info
-```
+---
+
+## Features
+	- showing the `next prayer time`.
+	- `send notification` if it's the time for a prayer.
+	- showing the `remaining time` till the next prayer.
 
 ---
 
@@ -21,38 +18,61 @@ git clone https://github.com/AbdeltwabMF/nxprayer.git
 cd nxprayer
 make clean install
 ```
+
 ---
 
 ## Usage
 
 ```
-$ nxprayer -next
-Midnight 11:54 PM
-
-$ nxprayer -adhan
-0
-
-$ nxprayer -remain
-00:39
+FLAGS:
+  -r,	--remain	Remaining time till the next prayer
+  -n,	--next		The name and the time for the next prayer
+  -d,	--adhan		Is it time for adhan or not by returning binary value(0, 1)
+  -h,	--help		Showing this info
 ```
 
----
+##### Terminal
 
-## Screenshot
+```
+$ nxprayer -n
+🕌 Dhuhr 11:47 AM
+
+$ nxprayer -r
+05:13
+```
+
+
+##### Status bars:
+If you are using [dwmblocks](https://github.com/torrinfail/dwmblocks) or [i3blocks](https://github.com/vivien/i3blocks) you could put `nxprayer` in your `config` file as a script.
+
+
+##### Screenshot
+
 ![np](np.png)
 
 ---
 
 ## Dependencies
- `jq` `python3` `gawk` `g++` `bash` `libnotify`
+
+`jq` `python3` `gawk` `gcc` `bash` `libnotify`
 
 
-> for Arch based systems:
+##### For Arch based systems, the package in the `AUR` 🥰:
+
 ```
-sudo pacman -S gcc gawk python3 bash jq libnotify
+yay -S nxprayer
+```
+
+##### For other distros:
+
+```
+git clone https://github.com/AbdeltwabMF/nxprayer.git
+cd nxprayer
+make clean install
 ```
 
 ---
 
 ## [License](LICENSE)
+
 Licensed under the GPL-v3 License.
