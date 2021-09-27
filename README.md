@@ -57,7 +57,7 @@ If you are using [dwmblocks](https://github.com/torrinfail/dwmblocks) or [i3bloc
 `jq` `python3` `gawk` `gcc` `bash` `libnotify`
 
 
-##### For Arch based systems, the package in the `AUR` 🥰:
+##### For Arch based systems, the package in the `AUR`:
 
 ```
 yay -S nxprayer
