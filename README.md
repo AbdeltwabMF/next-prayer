@@ -44,11 +44,6 @@ If you are using [dwmblocks](https://github.com/torrinfail/dwmblocks) or [i3bloc
 
 ## Installation
 
-##### Dependencies
-
-`jq` `python3` `gawk` `gcc` `bash` `libnotify`
-
-
 ##### For Arch based systems, the package in the `AUR`:
 
 ```
@@ -56,6 +51,13 @@ yay -S nxprayer
 ```
 
 ##### For other distros:
+
+##### Dependencies
+`Install the dependencies first from your package manager.`
+
+`jq` `python3` `gawk` `gcc` `bash` `libnotify`
+
+And then.
 
 ```
 git clone https://github.com/AbdeltwabMF/nxprayer.git
