@@ -11,16 +11,6 @@ Show me the time of the next `Islamic prayer`.
 
 ---
 
-## Installation
-
-```
-git clone https://github.com/AbdeltwabMF/nxprayer.git
-cd nxprayer
-make clean install
-```
-
----
-
 ## Usage
 
 ```
@@ -56,6 +46,9 @@ If you are using [dwmblocks](https://github.com/torrinfail/dwmblocks) or [i3bloc
 
 `jq` `python3` `gawk` `gcc` `bash` `libnotify`
 
+---
+
+## Installation
 
 ##### For Arch based systems, the package in the `AUR`:
 
