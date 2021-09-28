@@ -4,12 +4,8 @@ import json
 import os
 from urllib.request import urlopen
 
-home = os.path.expanduser("~")
-params_path = home
-data_path = home
-
-params_path += "/.config/nxprayer/params.json"
-data_path += "/.local/share/nxprayer/calendar"
+params_path = "/nxprayer/params.json"
+data_path = "/usr/local/share/nxprayer/calendar"
 root_url = "http://api.aladhan.com/v1/calendar?"
 
 if os.path.exists(params_path):

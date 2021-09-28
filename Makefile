@@ -1,35 +1,35 @@
-PREFIX = ${HOME}
+# nxprayer - Next Islamic prayer
+.POSIX:
 
-DATA_DIR = ${PREFIX}/.local/share/nxprayer
-BINR_DIR = ${PREFIX}/.local/bin
-CNFG_DIR = ${PREFIX}/.config/nxprayer
-MAN_DIR = /usr/local/share/man/man1
+include config.mk
 
-CPP_FLAGS = -Wall -Wextra -Wshadow -Og -g -Ofast -std=c++17 -pedantic -Wformat=2 -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wfloat-equal -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fno-sanitize-recover -fstack-protector -DDEBUG -ggdb3 -fsanitize=address,undefined -fmax-errors=2 -o
+SRC = lapi.cpp
 
-all: build
+all: lapi
 
-build: lapi.cpp rapi.py
-	g++ ${CPP_FLAGS} lapi lapi.cpp
-	rm -rf ${DATA_DIR}
-	mkdir -p ${DATA_DIR}/calendar/{1..12}
+lapi: ${SRC}
+	g++ ${WFLAGS} ${DFLAGS} ${OFLAGS} ${CPP} -o lapi ${SRC}
+
+install: lapi
+	mkdir -p ${DESTDIR}${CONFIG}/nxprayer
+	cp -i ex.json ${DESTDIR}${CONFIG}/nxprayer/params.json
+	mkdir -p ${DESTDIR}${PREFIX}/share/nxprayer/calendar/{1..12}
+	sed -i "s|^params_path.*|params_path = \"${CONFIG}/nxprayer/params.json\"|g" ./rapi.py
 	python3 rapi.py
-
-install: build
-	mkdir -p ${BINR_DIR}
-	cp -f lapi ${BINR_DIR}
-	cp -f nxprayer ${BINR_DIR}
-	mkdir -p ${CNFG_DIR}
-	cp -i ex.json ${CNFG_DIR}/params.json
-	mkdir -p ${MAN_DIR}
-	sudo cp -f nxprayer.1 ${MAN_DIR}
-	sudo chmod 644 ${MAN_DIR}/nxprayer.1
+	mkdir -p ${DESTDIR}${PREFIX}/bin
+	cp -f lapi ${DESTDIR}${PREFIX}/bin
+	cp -f nxprayer ${DESTDIR}${PREFIX}/bin
+	mkdir -p ${DESTDIR}${MPREFIX}/man1
+	cp -f nxprayer.1 ${DESTDIR}${MPREFIX}/man1
+	chmod 644 ${DESTDIR}${MPREFIX}/man1/nxprayer.1
 
 uninstall:
-	rm -f ${BINR_DIR}/nxprayer
-	rm -f ${BINR_DIR}/lapi
-	rm -rf ${DATA_DIR}
-	sudo rm -f ${MAN_DIR}/nxprayer.1
+	rm -f ${DESTDIR}${PREFIX}/bin/nxprayer
+	rm -f ${DESTDIR}${PREFIX}/bin/lapi
+	rm -f ${DESTDIR}${MPREFIX}/man1/nxprayer.1
+	rm -rf ${DESTDIR}${PREFIX}/share/nxprayer
 
 clean:
 	rm -f lapi
+
+.PHONY: all clean install uninstall
