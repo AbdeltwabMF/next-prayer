@@ -1,11 +1,6 @@
 {
-	"NOTE":"keys with capital letters it's just a comment",
-	"REMOTE_API_USED":"https://aladhan.com/prayer-times-api",
-	"PUT_YOUR_latitude_BELOW":"default = 30.052816227561923 [cairo]",
-	"latitude":"27.494142697334386",
-	"PUT_YOUR_longitude_BELOW":"default = 31.230651905820896 [cairo]",
-	"longitude":"30.869780209307066",
-	"CHANGE_METHOD_OF_CALCULATION_IF_YOU_WANT":"5 - Egyptian General Authority of Survey -- return to the website for more info.",
+	"latitude":"30.05310101838021",
+	"longitude":"31.230989728835304",
 	"method":"5",
 	"month":"1",
 	"adjustment":"1",
