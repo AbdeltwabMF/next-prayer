@@ -20,14 +20,14 @@ install: lapi.cpp rapi.py
 	cp -i ex.json ${CNFG_DIR}/params.json
 	python3 rapi.py
 	mkdir -p ${MAN_DIR}
-	cp -f nxprayer.1 ${MAN_DIR}
-	chmod 644 ${MAN_DIR}/nxprayer.1
+	sudo cp -f nxprayer.1 ${MAN_DIR}
+	sudo chmod 644 ${MAN_DIR}/nxprayer.1
 
 uninstall:
 	rm -f ${BINR_DIR}/nxprayer
 	rm -f ${BINR_DIR}/lapi
 	rm -rf ${DATA_DIR}
-	rm -f ${MAN_DIR}/nxprayer.1
+	sudo rm -f ${MAN_DIR}/nxprayer.1
 
 clean:
 	rm -f lapi
