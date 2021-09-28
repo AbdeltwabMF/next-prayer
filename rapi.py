@@ -4,7 +4,7 @@ import json
 import os
 from urllib.request import urlopen
 
-params_path = "/nxprayer/params.json"
+params_path = "/home/amf/.config/nxprayer/params.json"
 data_path = "/usr/local/share/nxprayer/calendar"
 root_url = "http://api.aladhan.com/v1/calendar?"
 

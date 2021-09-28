@@ -1,13 +1,13 @@
 # Next Prayer (nxprayer)
 
-Show me the time of the next `Islamic prayer`.
+`Islamic prayer` reminder for your status bar or/and scripts.
 
 ---
 
 ## Features
-- showing the `next prayer time`.
+- displays the `next prayer time`.
 - `send notification` if it's the time for a prayer.
-- showing the `remaining time` till the next prayer.
+- displays the `remaining time` till the next prayer.
 
 ---
 
@@ -15,10 +15,10 @@ Show me the time of the next `Islamic prayer`.
 
 ```
 FLAGS:
-  -r,	--remain	Remaining time till the next prayer
-  -n,	--next		The name and the time for the next prayer
-  -d,	--adhan		Is it time for adhan or not by returning binary value(0, 1)
-  -h,	--help		Showing this info
+  -r,	--remain	display the remaining time till the next prayer.
+  -n,	--next		display the time of the next islamic prayer.
+  -d,	--adhan		display if it's the time for adhan by returning binary value(0, 1).
+  -h,	--help		display this help information.
 ```
 
 ##### Terminal
@@ -44,7 +44,7 @@ If you are using [dwmblocks](https://github.com/torrinfail/dwmblocks) or [i3bloc
 
 ## Installation
 
-##### For Arch based systems, the package in the `AUR`:
+##### For Arch based systems:
 
 ```
 yay -S nxprayer
@@ -53,7 +53,7 @@ yay -S nxprayer
 ##### For other distros:
 
 ##### Dependencies
-`Install the dependencies first from your package manager.`
+`Install the dependencies first.`
 
 `jq` `python3` `gawk` `gcc` `bash` `libnotify`
 
@@ -62,7 +62,7 @@ And then.
 ```
 git clone https://github.com/AbdeltwabMF/nxprayer.git
 cd nxprayer
-make clean install
+sudo make clean install
 ```
 
 ---
