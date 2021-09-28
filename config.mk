@@ -5,8 +5,9 @@ VERSION = 0.1.1
 
 # paths
 PREFIX = /usr/local
-MPREFIX = ${PREFIX}/share/man
-CONFIG = /home/$(users | awk '{print $1}')/.config
+MPREFIX = $(PREFIX)/man
+_USER = $(shell users | awk '{print $1}')
+CONFIG = /home/$(_USER)/.config
 
 # C++ flags
 WFLAGS = -Wall -Wextra -Wshadow -Wformat=2 -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wfloat-equal

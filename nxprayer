@@ -1,6 +1,8 @@
 #!/bin/bash
 
-DATA_DIR=$HOME/.local/share/nxprayer/calendar
+PREFIX=/usr/local
+
+DATA_DIR=${PREFIX}/share/nxprayer/calendar
 TEMP_DIR=/tmp/nxprayer
 
 fetch_next_day() {
