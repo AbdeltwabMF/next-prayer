@@ -17,6 +17,7 @@ install: lapi
 	chmod 754 $(DESTDIR)/home/$(_USER)
 	chmod 754 $(DESTDIR)$(CONFIG)
 	chmod 754 $(DESTDIR)$(CONFIG)/nxprayer
+	chmod 664 $(DESTDIR)$(CONFIG)/nxprayer/params.json
 	mkdir -p $(DESTDIR)$(PREFIX)/share/nxprayer/calendar/{1..12}
 	sed -i "s|^params_path.*|params_path = \"$(DESTDIR)$(CONFIG)/nxprayer/params.json\"|g" ./rapi.py
 	sed -i "s|^data_path.*|data_path = \"$(DESTDIR)$(PREFIX)/share/nxprayer/calendar\"|g" ./rapi.py
