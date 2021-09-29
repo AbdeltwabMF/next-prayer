@@ -1,6 +1,6 @@
 # Next Prayer (nxprayer)
 
-`Islamic prayer` reminder for your status bar or/and scripts.
+`Islamic prayers` reminder, for your status bar or/and scripts.
 
 ---
 
@@ -20,6 +20,8 @@ FLAGS:
   -d,	--adhan		display if it's the time for adhan by returning binary value(0, 1).
   -h,	--help		display this help information.
 ```
+
+> For more info read the MAN PAGE.
 
 ##### Terminal
 
