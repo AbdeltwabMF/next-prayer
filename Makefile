@@ -12,7 +12,7 @@ lapi: $(SRC)
 
 install: lapi
 	mkdir -p $(DESTDIR)$(CONFIG)/nxprayer
-	cp -i ex.json $(DESTDIR)$(CONFIG)/nxprayer/params.json
+	cp -f ex.json $(DESTDIR)$(CONFIG)/nxprayer/params.json
 	chown -R "$(_USER):$(_USER)" $(DESTDIR)$(CONFIG)/nxprayer
 	chmod 754 $(DESTDIR)/home/$(_USER)
 	chmod 754 $(DESTDIR)$(CONFIG)
