@@ -1,13 +1,19 @@
 # nxprayer version
 VERSION = 0.1.1
 
+SHELL = /bin/bash
+
 # Customize below to fit your system
 
 # paths
-PREFIX = /usr/local
-MPREFIX = $(PREFIX)/man
-_USER = $(shell users | awk '{print $1}')
-CONFIG = /home/$(_USER)/.config
+PREFIX = /usr
+LPREFIX = $(PREFIX)/local
+SPREFIX = $(PREFIX)/share
+MAN = $(LPREFIX)/man
+DOC = $(SPREFIX)/doc
+LIC = $(SPREFIX)/licenses
+LGUSER = $(shell users | awk '{ print $$1 }')
+CONFIG = /home/$(LGUSER)/.config
 
 # C++ flags
 WFLAGS = -Wall -Wextra -Wshadow -Wformat=2 -Wconversion -Wlogical-op -Wshift-overflow=2 -Wduplicated-cond -Wfloat-equal
