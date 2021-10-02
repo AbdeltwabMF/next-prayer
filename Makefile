@@ -27,7 +27,9 @@ install: local_api
 	cp -f remote_api.py $(DESTDIR)$(LPREFIX)/bin
 	cp -f nxprayer $(DESTDIR)$(LPREFIX)/bin
 	chmod 755 $(DESTDIR)$(LPREFIX)/bin/local_api
-	chmod 755 $(DESTDIR)$(LPREFIX)/bin/remote_api.py
+	chown "$(LGUSER):$(LGUSER)" $(DESTDIR)$(LPREFIX)/bin/remote_api.py
+	sed -i "s|^params_path.*|params_path = \"$(CONFIG)/nxprayer/params.json\"|g" ./remote_api.py
+	sed -i "s|^data_path.*|data_path = \"$(LPREFIX)/share/nxprayer/calendar\"|g" ./remote_api.py
 	chmod 755 $(DESTDIR)$(LPREFIX)/bin/nxprayer
 	mkdir -p $(DESTDIR)$(MAN)/man1
 	cp -f nxprayer.1 $(DESTDIR)$(MAN)/man1
