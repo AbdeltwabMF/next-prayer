@@ -1,59 +1,85 @@
 #!/bin/bash
+#
+# passing the current time to local_api to decide or get:
+# - which salat the next?
+# - is it the time of athan?
+# - is it the midnight to fetch new day?
+# - the remaining time till the next prayer
+# - the hijri date
 
-PREFIX=/usr/local
-
-DATA_DIR=${PREFIX}/share/nxprayer/calendar
-TEMP_DIR=/tmp/nxprayer
+readonly PREFIX=/usr/local
+readonly DATA_DIR=${PREFIX}/share/nxprayer/calendar
+readonly TEMP_DIR=/tmp/nxprayer
 
 fetch_next_day() {
-  CUR_MONTH=$(date "+%_m" | gawk '{print $1}')
-  CUR_DAY=$(date "+%_d" | gawk '{print $1}')
+	local cur_year=$(date "+%Y")
+  local cur_month=$(date "+%_m" | gawk '{ print $1 }')
+  local cur_day=$(date "+%_d" | gawk '{ print $1 }')
 
-  mkdir -p "$TEMP_DIR"
+	mkdir -p "${TEMP_DIR}"
 
-  # cached data processing
-  cat "$DATA_DIR/$CUR_MONTH/$CUR_DAY" | jq '.["timings"]' > "$TEMP_DIR"/timings
-  cat "$DATA_DIR/$CUR_MONTH/$CUR_DAY" | jq '.["date"]' > "$TEMP_DIR"/hijri
+  cat "${DATA_DIR}/${cur_year}/${cur_month}/${cur_day}" | jq '.["timings"]' > "${TEMP_DIR}"/timings
+  cat "${DATA_DIR}/${cur_year}/${cur_month}/${cur_day}" | jq '.["date"]' > "${TEMP_DIR}"/hijri
 
-  sed -i "s/ (.*)\|\"\|{\|}\|,//g" "$TEMP_DIR"/timings
-  gawk -i inplace -F': ' 'NF {print $2 $1}' "$TEMP_DIR"/timings
+  sed -i "s/ (.*)\|\"\|{\|}\|,//g" "${TEMP_DIR}"/timings
+  gawk -i inplace -F': ' 'NF { print $2 $1 }' "${TEMP_DIR}"/timings
 
-
-  sed -i "s/{\|}\|\"\|,\|\ //g; /^[^de].*$/d; /^\s*$/d; s/^.*://g; s/-..-/ /g" "$TEMP_DIR"/hijri
-  gawk -i inplace 'NR == 2 {print l "." $0 "." r} {l = $1; r = $2 - 1400;}' "$TEMP_DIR"/hijri
+  sed -i "s/{\|}\|\"\|,\|\ //g; /^[^de].*$/d; /^\s*$/d; s/^.*://g; s/-..-/ /g" "${TEMP_DIR}"/hijri
+  gawk -i inplace 'NR == 2 { print l "." $0 "." r } { l = $1; r = $2 - 1400; }' "${TEMP_DIR}"/hijri
 }
 
 get_output() {
-  echo $(echo "$1" | gawk -F: '{hrs = $1; mod = hrs % 12; mer = "AM"; if(mod == 10 || mod == 0 || mod == 11) {
-  if(hrs >= 12) mer = "PM"; if(hrs == 0) mod = 12; print mod ":" $2, mer;} else { print "0" mod ":" $2, mer}}')
+  echo $(echo "$1" \
+		| gawk -F: '{
+		hrs = $1;
+		mod = hrs % 12;
+		mer = "AM";
+
+		if (mod == 10 || mod == 0 || mod == 11) {
+			if(hrs >= 12)
+				mer = "PM";
+
+			if (hrs == 0)
+				mod = 12;
+
+			print mod ":" $2, mer;
+		} else
+			print "0" mod ":" $2, mer;
+	}')
 }
 
-! [[ -e "$TEMP_DIR"/timings ]] || [  $(cat "$TEMP_DIR"/timings | wc -l) -lt 8 ] && fetch_next_day
+! [[ -e "${TEMP_DIR}"/timings ]] || [[ $(cat "${TEMP_DIR}"/timings | wc -l) -lt 8 ]] && fetch_next_day
 
-CUR_TIME=$(date "+%H:%M")
+cur_time=$(date "+%H:%M")
 
-cat "$TEMP_DIR"/timings > "$TEMP_DIR"/input
-echo "$CUR_TIME  A" >> "$TEMP_DIR"/input
+cat "${TEMP_DIR}"/timings > "${TEMP_DIR}"/input
+echo "${cur_time}  A" >> "${TEMP_DIR}"/input
 
-# run local apis
-lapi
+# run local api and fetch the next vars
+local_api
 
-NextTime=$(cat "$TEMP_DIR"/output | gawk '/nxprayer/ {print $2}')
-When=$(cat "$TEMP_DIR"/output | gawk '/nxprayer/ {print $3}')
-Remains=$(cat "$TEMP_DIR"/output | gawk '/remains/ {print $2}')
-AdhanTime=$(cat "$TEMP_DIR"/output | gawk '/adhantime/ {print $2}')
-FetchNextDay=$(cat "$TEMP_DIR"/output | gawk '/fetchnextday/ {print $2}')
+next_time=$(cat "${TEMP_DIR}"/output | gawk '/nxprayer/ { print $2 }')
+when=$(cat "${TEMP_DIR}"/output | gawk '/nxprayer/ { print $3 }')
+remains=$(cat "${TEMP_DIR}"/output | gawk '/remains/ { print $2 }')
+adhan_time=$(cat "${TEMP_DIR}"/output | gawk '/adhantime/ { print $2 }')
+fetch_next_day=$(cat "${TEMP_DIR}"/output | gawk '/fetchnextday/ { print $2 }')
 
-[[ $FetchNextDay -eq 1 ]] && fetch_next_day
-[[ $AdhanTime -eq 1 ]] && notify-send "Next Prayer" "It's time for $NextTime"
+[[ ${fetch_next_day} -eq 1 ]] && fetch_next_day
+[[ ${adhan_time} -eq 1 ]] && notify-send "Next Prayer" "It's time for ${next_time}"
 
-case $BLOCK_BUTTON in
-	1) notify-send "Next Prayer" "Time till $NextTime $Remains";;
+case "${BLOCK_BUTTON}" in
+	1) notify-send "Next Prayer" "Time till ${next_time} ${remains}" ;;
 esac
 
 case "$1" in
-  "--remain"|"-r") echo "$Remains";;
-  "--adhan"|"-d") echo "$AdhanTime";;
-  "--help"|"-h") printf "%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n" "Flags:" "-r, --remain" "Remaining time till the next prayer" "-n, --next" "The name and the time for the next prayer" "-d, --adhan" "Is it time for adhan or not by returning binary value(0, 1)" "-h, --help" "Showing this info";;
-  "--next"|"-n"|*) echo "🕌 $NextTime $(get_output "$When")";;
+  "--remain"|"-r") echo "${remains}" ;;
+  "--adhan"|"-d") echo "${adhan_time}" ;;
+  "--help"|"-h")
+		printf "%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n" \
+			"Flags:" "-r, --remain" "Remaining time till the next prayer" \
+			"-n, --next" "The name and the time for the next prayer" \
+			"-d, --adhan" "Is it time for adhan or not by returning binary value(0, 1)" \
+			"-h, --help" "Showing this info"
+				;;
+  "--next"|"-n"|*) echo "🕌 ${next_time} $(get_output ${when})" ;;
 esac
