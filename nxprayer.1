@@ -1,4 +1,4 @@
-.TH NXPRAYER 1 2021-09-29 GNU
+.TH "NXPRAYER" "1" "2021 Oct 2" nxprayer-0.1.1
 
 .SH NAME
 nxprayer \- Next Islamic prayer.
@@ -22,7 +22,7 @@ nxprayer \- Next Islamic prayer.
 .SH DESCRIBTION
 .B
 nxprayer
-displays the time of the next Islamic prayer.
+displays the time of the next prayer.
 
 .SH OPTIONS
 .TP
@@ -30,7 +30,7 @@ displays the time of the next Islamic prayer.
 display this help information.
 .TP
 .BR \-n ", " \-\-next
-display the time of the next islamic prayer.
+display the time of the next prayer.
 .TP
 .BR \-r ", " \-\-remain
 display the remaining time till the next prayer.
@@ -112,9 +112,14 @@ If not specified, it defaults to \fI5 - Egyptian General Authority of Survey.
 .B "adjustment" \fR(number)
 Number of days to adjust hijri date(s). Example: 1 or 2 or -1 or -2
 
-.SH NOTES
-After you edit the \fI~/.config/nxprayer/params.json \fRfile go run rapi.py again in order to fetch the calendar.
-And remove the cached data.
+.SH CUSTOMIZATION
+nxprayer can be customized by creating a custom \fI~/.config/nxprayer/params.json \fRand (re)run the \fI'rapi.py'.
 
 .SH AUTHOR
 Abd El-Twab M. Fakhry <abdeltwab.m.fakhry@gmail.com>
+
+.SH LICENSE
+See the LICENSE file for the terms of redistribution.
+
+.SH BUGS
+Consider reporting bugs via opening an issue on github.
