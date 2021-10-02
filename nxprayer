@@ -20,7 +20,7 @@ fetch_next_day() {
     cur_month=$(date "+%_m" | gawk '{ print $1 }')
     cur_day=$(date "+%_d" | gawk '{ print $1 }')
 
-	  mkdir -p "${TEMP_DIR}"
+    mkdir -p "${TEMP_DIR}"
 
     jq '.["timings"]' < "${DATA_DIR}/${cur_year}/${cur_month}/${cur_day}" > "${TEMP_DIR}"/timings
     jq '.["date"]' < "${DATA_DIR}/${cur_year}/${cur_month}/${cur_day}" > "${TEMP_DIR}"/hijri
