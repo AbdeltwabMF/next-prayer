@@ -40,7 +40,7 @@ If you are using [dwmblocks](https://github.com/torrinfail/dwmblocks) or [i3bloc
 
 ##### Screenshot
 
-![np](np.png)
+![np](nxprayer.png)
 
 ---
 
