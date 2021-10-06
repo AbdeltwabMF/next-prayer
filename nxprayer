@@ -39,16 +39,19 @@ get_output() {
 		mod = hrs % 12;
 		mer = "AM";
 
-		if (mod == 10 || mod == 0 || mod == 11) {
-			if(hrs >= 12)
+		if (mod == 0)
+			mod = 12;
+
+		if (mod == 10 || mod == 11 || mod == 12) {
+			if (hrs >= 12)
 				mer = "PM";
 
-			if (hrs == 0)
-				mod = 12;
-
 			print mod ":" $2, mer;
-		} else
+		} else {
+			if (hrs > 12)
+				mer = "PM";
 			print "0" mod ":" $2, mer;
+		}
 	}')"
 }
 
