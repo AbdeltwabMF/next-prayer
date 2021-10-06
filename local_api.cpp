@@ -46,19 +46,23 @@ string sf, ss;
 int cur_inx = -1;
 pair <string, string> cur, nxt;
 
-pair <string, string> next_prayer() {
-  return *mawaqeet.find_by_order(((int)mawaqeet.order_of_key(cur) + 1) % 9);
+pair <string, string>
+next_prayer() {
+  return *mawaqeet.find_by_order(((int)mawaqeet.order_of_key(cur) + 1) % int(mawaqeet.size()));
 }
 
-bool adhan_now() {
+bool
+adhan_now() {
   return (cur.second == nxt.second);
 }
 
-bool fetch_next() {
+bool
+fetch_next() {
   return (cur.second == "00:00");
 }
 
-pair <int, int> converto_int(string &x) {
+pair <int, int>
+converto_int(string &x) {
   assert((int)x.size() == 5);
   int hrs = (x[0] - '0') * TEN + (x[1] - '0');
   int mns = (x[3] - '0') * TEN + (x[4] - '0');
@@ -66,7 +70,8 @@ pair <int, int> converto_int(string &x) {
   return make_pair(hrs, mns);
 }
 
-string difference() {
+string
+difference() {
   string ret = "";
 
   int chrs, cmns, nhrs, nmns, rhrs, rmns;
@@ -88,7 +93,8 @@ string difference() {
   return ret;
 }
 
-void read_data() {
+void
+read_data() {
   while(cin >> ss >> sf) {
     mawaqeet.insert(make_pair(sf, ss));
 
@@ -104,8 +110,8 @@ int main () {
   read_data();
   nxt = next_prayer();
 
-  cout << "nxprayer " <<  nxt.first << " " << nxt.second << endl;
-  cout << "remains " << difference() << endl;
-  cout << "adhantime " << adhan_now() << endl;
-  cout << "fetchnextday " << fetch_next() << endl;
+  cout << "nxprayer 		" << nxt.first 		<< " " << nxt.second << endl;
+  cout << "remains			" << difference() << endl;
+  cout << "adhantime		" << adhan_now() 	<< endl;
+  cout << "fetchnextday	" << fetch_next() << endl;
 }
