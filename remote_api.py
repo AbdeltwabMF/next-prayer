@@ -11,7 +11,7 @@ root_url = "http://api.aladhan.com/v1/calendar?"
 if os.path.exists(params_path):
     pass
 else:
-    print("Error: run 'sudo make clean install'.")
+    print("Error: ~/.config/nxprayer/params.json not found!.")
     exit(1)
 
 with open(params_path) as f:
