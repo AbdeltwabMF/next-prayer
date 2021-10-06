@@ -32,7 +32,7 @@ install: local_api
 	chown "$(LGUSER):$(LGUSER)" $(DESTDIR)$(LPREFIX)/bin/remote_api.py
 	chmod 755 $(DESTDIR)$(LPREFIX)/bin/nxprayer
 	mkdir -p $(DESTDIR)$(MAN)/man1
-	cp -f nxprayer.1 $(DESTDIR)$(MAN)/man1
+	sed "s/VERSION/$(VERSION)/g" < nxprayer.1 > $(DESTDIR)$(MAN)/man1/nxprayer.1
 	chmod 644 $(DESTDIR)$(MAN)/man1/nxprayer.1
 
 uninstall:
