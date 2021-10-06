@@ -1,9 +1,9 @@
 # Maintainer: Abd El-Twab M. Fakhry <abdeltwab.m.fakhry@gmail.com>
 
 pkgname=nxprayer
-pkgver=0.1.5.r61.a29f84e
+pkgver=0.1.5
 pkgrel=1
-pkgdesc="Islamic prayers reminder, for your status bar or/and scripts."
+pkgdesc="Islamic prayers reminder, for your status bar."
 arch=('x86_64')
 url="https://github.com/AbdeltwabMF/nxprayer.git"
 license=('GPL-v3')
@@ -15,6 +15,8 @@ depends=(
 makedepends=(
 	'git'
 	'sed'
+	'gcc'
+	'make'
 	'gawk'
 	'python3'
 )
