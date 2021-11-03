@@ -1,11 +1,6 @@
 #!/bin/bash
 #
-# passing the current time to local_api to decide or get:
-# - which salat the next?
-# - is it the time of athan?
-# - is it the midnight to fetch new day?
-# - the remaining time till the next prayer
-# - the hijri date
+#
 
 readonly PREFIX=/usr/local
 readonly DATA_DIR=${PREFIX}/share/nxprayer/calendar
@@ -56,11 +51,13 @@ get_output() {
 }
 
 info() {
-	printf "%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n" \
+	printf "%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n" \
 		"Flags:" \
-		"-r, --remain" 	"display the remaining time till the next prayer." \
+		"-l, --left" 		"display the time left until the next prayer." \
+		"-e, --elapsed"	"display the elapsed time since the previous prayer." \
 		"-n, --next" 		"display the time of the next islamic prayer." \
-		"-d, --adhan" 	"display if it's the time for adhan by returning binary value(0, 1)." \
+		"-p, --prev" 		"display the time of the previous islamic prayer." \
+		"-a, --adhan" 	"display if it's the time for adhan by returning \"yes\" or \"no\"." \
 		"-h, --help"		"display this help information."
 }
 
@@ -74,22 +71,30 @@ echo "${cur_time}  A" >> "${TEMP_DIR}"/input
 # run local api and fetch the next vars
 local_api
 
-next_time=$(gawk '/nxprayer/ { print $2 }' < "${TEMP_DIR}"/output)
-when=$(gawk '/nxprayer/ { print $3 }' < "${TEMP_DIR}"/output)
-remains=$(gawk '/remains/ { print $2 }' < "${TEMP_DIR}"/output)
-adhan_time=$(gawk '/adhantime/ { print $2 }' < "${TEMP_DIR}"/output)
-fetch_next_day=$(gawk '/fetchnextday/ { print $2 }' < "${TEMP_DIR}"/output)
+next_prayer=$(gawk '/next_prayer/ { print $2 }' < "${TEMP_DIR}"/output)
+next_prayer_time=$(gawk '/next_prayer/ { print $3 }' < "${TEMP_DIR}"/output)
+prev_prayer=$(gawk '/prev_prayer/ { print $2 }' < "${TEMP_DIR}"/output)
+prev_prayer_time=$(gawk '/prev_prayer/ { print $3 }' < "${TEMP_DIR}"/output)
+time_left=$(gawk '/time_left/ { print $2 }' < "${TEMP_DIR}"/output)
+elapsed_time=$(gawk '/elapsed_time/ { print $2 }' < "${TEMP_DIR}"/output)
+adhan_time=$(gawk '/adhan_time/ { print $2 }' < "${TEMP_DIR}"/output)
+new_day=$(gawk '/new_day/ { print $2 }' < "${TEMP_DIR}"/output)
 
-[[ ${fetch_next_day} -eq 1 ]] && fetch_next_day
-[[ ${adhan_time} -eq 1 ]] && notify-send "Next Prayer" "It's time for ${next_time}"
-
-case "${BLOCK_BUTTON}" in
-	  1) notify-send "Next Prayer" "Time till ${next_time} ${remains}" ;;
-esac
+[[ ${new_day} == "yes" ]] && fetch_next_day
+[[ ${adhan_time} == "yes" ]] && notify-send -t 60000 "Next Prayer" "NOW It's the time for ${next_prayer}"
 
 case "$1" in
-    "--remain"|"-r") echo "${remains}" ;;
-    "--adhan"|"-d") echo "${adhan_time}" ;;
+    "--prev"|"-p") echo "🕌 ${prev_prayer} $(get_output ${prev_prayer_time})" ;;
+    "--left"|"-l") echo "Time left until ${next_prayer}: ${time_left}" ;;
+    "--elapsed"|"-e") echo "Elapsed time since ${prev_prayer}: ${elapsed_time}" ;;
+    "--adhan"|"-a") echo "${adhan_time}" ;;
     "--help"|"-h") info ;;
-    "--next"|"-n"|*) echo "🕌 ${next_time} $(get_output ${when})" ;;
+    "--next"|"-n"|*) echo "🕌 ${next_prayer} $(get_output ${next_prayer_time})" ;;
+esac
+
+case "${BLOCK_BUTTON}" in
+	  1)
+			notify-send -t 60000 "Next Prayer" "Time   left  until ${next_prayer}:  ${time_left}
+Elapsed time since ${prev_prayer}:  ${elapsed_time}"
+			;;
 esac
