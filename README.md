@@ -1,13 +1,14 @@
 # Next Prayer (nxprayer)
 
-`Islamic prayers` reminder, for your status bar or/and scripts.
+`Islamic prayers` reminder, for Linux status bars.
 
 ---
 
 ## Features
 - displays the `next prayer time`.
 - `send notification` if it's the time for a prayer.
-- displays the `remaining time` till the next prayer.
+- displays the `time left` until the next prayer.
+- displays the `elapsed time` since the previous prayer.
 
 ---
 
@@ -15,13 +16,14 @@
 
 ```
 FLAGS:
-  -r,	--remain	display the remaining time till the next prayer.
-  -n,	--next		display the time of the next islamic prayer.
-  -d,	--adhan		display if it's the time for adhan by returning binary value(0, 1).
-  -h,	--help		display this help information.
-```
 
-> For more info read the MAN PAGE.
+	-l, --left  	display the time left until the next prayer.
+	-e,--elapsed	display the elapsed time since the previous prayer.
+	-n, --next  	display the time of the next islamic prayer.
+	-p, --prev  	display the time of the previous islamic prayer.
+	-a, --adhan 	display if it's the time for adhan by returning "yes" or "no".
+	-h, --help  	display this help information.
+```
 
 ##### Terminal
 
@@ -29,8 +31,17 @@ FLAGS:
 $ nxprayer -n
 🕌 Dhuhr 11:47 AM
 
-$ nxprayer -r
-05:13
+$ nxprayer -p
+🕌 Sunrise 06:11 AM
+
+$ nxprayer -l
+05:17
+
+$ nxprayer -e
+00:19
+
+$ nxprayer -a
+no
 ```
 
 
