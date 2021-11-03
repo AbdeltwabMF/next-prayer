@@ -1,0 +1,10 @@
+===================================================================================
+Release Notes For v0.1.9
+===================================================================================
+
+This release was long overdue. There have been a lot of changes in the mean
+time. For a full list of changes, see the changelog.
+
+For users:
+
+I've removed unnecessary timings so that the end of each Salat is the starting of the next one.

@@ -1,23 +1,31 @@
-.TH "NXPRAYER" "1" "2021 Oct 2" nxprayer-VERSION
+.TH "NXPRAYER" "1" "2021 Nov 3" nxprayer-VERSION
 
 .SH NAME
 nxprayer \- Next Islamic prayer.
 
 .SH SYNOPSIS
 .B nxprayer
-.RB [ \-h ]
-.nf
-.fi
-.B nxprayer
 .RB [ \-n ]
 .nf
 .fi
 .B nxprayer
-.RB [ \-r ]
+.RB [ \-p ]
 .nf
 .fi
 .B nxprayer
-.RB [ \-d ]
+.RB [ \-l ]
+.nf
+.fi
+.B nxprayer
+.RB [ \-e ]
+.nf
+.fi
+.B nxprayer
+.RB [ \-a ]
+.nf
+.fi
+.B nxprayer
+.RB [ \-h ]
 
 .SH DESCRIBTION
 .B
@@ -26,17 +34,23 @@ displays the time of the next prayer.
 
 .SH OPTIONS
 .TP
-.BR \-h ", " \-\-help
-display this help information.
-.TP
 .BR \-n ", " \-\-next
 display the time of the next prayer.
 .TP
-.BR \-r ", " \-\-remain
-display the remaining time till the next prayer.
+.BR \-p ", " \-\-prev
+display the time of the previous islamic prayer.
 .TP
-.BR \-d ", " \-\-adhan
-display if it's the time for adhan by returning binary value(0, 1).
+.BR \-l ", " \-\-left
+display the time left until the next prayer.
+.TP
+.BR \-e ", " \-\-elapsed
+display the elapsed time since the previous prayer.
+.TP
+.BR \-a ", " \-\-adhan
+display if it's the time for adhan by returning "yes" or "no".
+.TP
+.BR \-h ", " \-\-help
+display this help information.
 
 .SH
 FILES
@@ -111,10 +125,10 @@ Number of days to adjust hijri date(s). Example: 1 or 2 or -1 or -2
 nxprayer can be customized by creating a custom \fI~/.config/nxprayer/params.json \fRand (re)run the \fI'remote_api.py'.
 
 .SH AUTHOR
-Abd El-Twab M. Fakhry <abdeltwab.m.fakhry@gmail.com>
+Abd El-Twab M. Fakhry <\fIabdeltwab.m.fakhry@gmail.com\fR>
 
 .SH LICENSE
 See the LICENSE file for the terms of redistribution.
 
 .SH BUGS
-Consider reporting bugs via opening an issue on github.
+Consider reporting bugs via opening an issue here (https://github.com/abdeltwabmf/nxprayer/issues).
