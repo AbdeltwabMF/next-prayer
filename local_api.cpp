@@ -42,23 +42,35 @@ class compare {
 const int TEN = 10;
 
 indexed_set <pair<string, string>, compare> mawaqeet;
-string sf, ss;
-int cur_inx = -1;
-pair <string, string> cur, nxt;
+pair <string, string> cur, _next, _prev;
+string _salat, _time;
+
+int
+curr_prayer(pair <string, string> cur) {
+	/* return the number of items in the set that are strictly smaller than cur */
+	return mawaqeet.order_of_key(cur);
+}
 
 pair <string, string>
-next_prayer() {
-  return *mawaqeet.find_by_order(((int)mawaqeet.order_of_key(cur) + 1) % int(mawaqeet.size()));
+next_prayer(pair <string, string> cur) {
+	int sz = mawaqeet.size();
+  return *mawaqeet.find_by_order((curr_prayer(cur) + 1) % sz);
 }
 
-bool
-adhan_now() {
-  return (cur.second == nxt.second);
+pair <string, string>
+prev_prayer(pair <string, string> cur) {
+	int sz = mawaqeet.size();
+  return *mawaqeet.find_by_order((curr_prayer(cur) - 1 + sz) % sz);
 }
 
-bool
-fetch_next() {
-  return (cur.second == "00:00");
+string
+adhan_now(pair <string, string> cur, pair <string, string> _next) {
+  return (cur.second == _next.second ? "yes" : "no");
+}
+
+string
+fetch_next(pair <string, string> cur) {
+  return (cur.second == "00:00" ? "yes" : "no");
 }
 
 pair <int, int>
@@ -71,47 +83,51 @@ converto_int(string &x) {
 }
 
 string
-difference() {
+difference(pair <string, string> lhs, pair <string, string> rhs) {
   string ret = "";
 
-  int chrs, cmns, nhrs, nmns, rhrs, rmns;
-  tie(chrs, cmns) = converto_int(cur.second);
-  tie(nhrs, nmns) = converto_int(nxt.second);
+  int lhrs, lmns, rhrs, rmns, dhrs, dmns;
+  tie(lhrs, lmns) = converto_int(lhs.second);
+  tie(rhrs, rmns) = converto_int(rhs.second);
 
-  if(chrs > nhrs) nhrs += 24;
-  if(cmns > nmns) nmns += 60, --nhrs;
+  if(lhrs > rhrs) rhrs += 24;
+  if(lmns > rmns) rmns += 60, --rhrs;
 
-  rhrs = nhrs - chrs;
-  rmns = nmns - cmns;
+  dhrs = rhrs - lhrs;
+  dmns = rmns - lmns;
 
-  if(rhrs < 10) ret += "0";
-  ret += to_string(rhrs);
+  if(dhrs < 10) ret += "0";
+  ret += to_string(dhrs);
   ret += ":";
-  if(rmns < 10) ret += "0";
-  ret += to_string(rmns);
+  if(dmns < 10) ret += "0";
+  ret += to_string(dmns);
 
   return ret;
 }
 
 void
 read_data() {
-  while(cin >> ss >> sf) {
-    mawaqeet.insert(make_pair(sf, ss));
+  while(cin >> _time >> _salat) {
+    mawaqeet.insert(make_pair(_salat, _time));
 
-    if(sf == "A")
-      cur = make_pair(sf, ss);
+    if(_salat == "A")
+      cur = make_pair(_salat, _time);
   }
 }
 
-int main () {
+int main ()
+{
   fast();
   file();
 
   read_data();
-  nxt = next_prayer();
+  _next = next_prayer(cur);
+  _prev = prev_prayer(cur);
 
-  cout << "nxprayer 		" << nxt.first 		<< " " << nxt.second << endl;
-  cout << "remains			" << difference() << endl;
-  cout << "adhantime		" << adhan_now() 	<< endl;
-  cout << "fetchnextday	" << fetch_next() << endl;
+  cout << "next_prayer" << " " << _next.first << " " << _next.second << endl;
+  cout << "prev_prayer" << " " << _prev.first << " " << _prev.second << endl;
+  cout << "time_left" << " " << difference(cur, _next) << endl;
+  cout << "elapsed_time" << " " << " " << difference(_prev, cur) << endl;
+  cout << "adhan_time" << " " << adhan_now(cur, _next) << endl;
+  cout << "new_day" << " " << fetch_next(cur) << endl;
 }

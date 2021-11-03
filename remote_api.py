@@ -38,6 +38,8 @@ for i in range(6):
         for day in month:
             del day["meta"]
             del day["timings"]["Sunset"]
+            del day["timings"]["Imsak"]
+            del day["timings"]["Midnight"]
             del day["date"]["readable"]
             del day["date"]["timestamp"]
             del day["date"]["gregorian"]
