@@ -1,6 +1,6 @@
 # Next Prayer (nxprayer)
 
-`Islamic prayers` reminder, for Linux status bars.
+Next Islamic prayer, for status bars.
 
 ---
 
@@ -66,9 +66,9 @@ yay -S nxprayer
 ##### For other distros:
 
 ##### Dependencies
-`Install the dependencies first.`
+**Install the dependencies first.**
 
-`jq` `python3` `gawk` `gcc` `bash` `libnotify`
+`jq` `python3` `libnotify`
 
 And then.
 
@@ -82,4 +82,4 @@ sudo make clean install
 
 ## [License](LICENSE)
 
-Licensed under the GPL-v3 License.
+Licensed under the GPLv3 License.
