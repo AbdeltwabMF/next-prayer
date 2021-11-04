@@ -1,0 +1,17 @@
+pkgbase = nxprayer
+	pkgdesc = Next Islamic prayer, for status bars.
+	pkgver = 0.1.9
+	pkgrel = 1
+	url = https://github.com/AbdeltwabMF/nxprayer.git
+	arch = x86_64
+	license = GPLv3
+	makedepends = git
+	makedepends = python3
+	depends = jq
+	depends = libnotify
+	provides = nxprayer
+	conflicts = nxprayer
+	source = git+https://github.com/AbdeltwabMF/nxprayer.git
+	sha1sums = SKIP
+
+pkgname = nxprayer

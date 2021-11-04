@@ -4,5 +4,6 @@
 	  "method":"5",
 	  "adjustment":"1",
 	  "annual":"true",
-	  "year":"2021"
+	  "year":"2021",
+		"threshold":"00:30"
 }
