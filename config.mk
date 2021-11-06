@@ -1,5 +1,5 @@
 # nxprayer version
-VERSION = 0.1.9
+VERSION = 1.0.1
 
 SHELL = /bin/bash
 

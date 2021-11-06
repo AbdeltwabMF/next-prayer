@@ -1,12 +1,27 @@
 # nxprayer changelog
 
 
-## 0.1.9 -- 2021-11-03
+## v1.0.1 -- 2021-11-06
+
+### Added
+
+- Hybrid mode for tracking the elapsed time until threshold.
+- Version
+
+### Fixed
+
+- Fetching the data using urlopen lib.
+
+
+---
+
+
+## v0.1.9 -- 2021-11-03
 
 ### Added
 
 - Time of the previous prayer.
-- elapsed time since the previous prayer.
+- Elapsed time since the previous prayer.
 
 ### Fixed
 

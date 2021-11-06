@@ -1,0 +1,154 @@
+.TH "NEXT-PRAYER" "1" "2021 Nov 6" next-prayer-VERSION
+
+.SH NAME
+next-prayer \- Next Islamic prayer.
+
+.SH SYNOPSIS
+.B next-prayer
+.RB [ \-n ]
+.nf
+.fi
+.B next-prayer
+.RB [ \-p ]
+.nf
+.fi
+.B next-prayer
+.RB [ \-i ]
+.nf
+.fi
+.B next-prayer
+.RB [ \-e ]
+.nf
+.fi
+.B next-prayer
+.RB [ \-l ]
+.nf
+.fi
+.B next-prayer
+.RB [ \-a ]
+.nf
+.fi
+.B next-prayer
+.RB [ \-h ]
+.nf
+.fi
+.B next-prayer
+.RB [ \-v ]
+
+.SH DESCRIBTION
+.B
+next-prayer
+Islamic prayers reminder for status bars.
+
+.SH OPTIONS
+.TP
+.BR \-n ", " \-\-next
+The next prayer and its time.
+.TP
+.BR \-p ", " \-\-prev
+The previous prayer and its time.
+.TP
+.BR \-i ", " \-\-hybrid
+Display the elapsed time since the previous prayer until the elapsed time reach threshold time determined in config file, Then it will display the next prayer and its time.
+.TP
+.BR \-e ", " \-\-elapsed
+The elapsed time since the previous prayer.
+.TP
+.BR \-l ", " \-\-left
+The time left until the next prayer.
+.TP
+.BR \-a ", " \-\-adhan
+Display if it's the time for adhan by returning "yes" or "no".
+.TP
+.BR \-h ", " \-\-help
+Display this help information.
+.TP
+.BR \-v ", " \-\-version
+The current version.
+
+.SH
+FILES
+.TP
+.I /tmp/next-prayer
+The cached data that is used by the executable file.
+.TP
+.I /usr/local/bin/next-prayer
+The executable file.
+.TP
+.I ~/.config/next-prayer/config.json
+The config file.
+.nf
+{
+.nf
+	\fB"latitude"\fR:"24.494142697334386",
+.nf
+	\fB"longitude"\fR:"32.869780209307066",
+.nf
+	\fB"method"\fR:"5",
+.nf
+	\fB"adjustment"\fR:"1",
+.nf
+	\fB"annual"\fR:"true",
+.nf
+	\fB"year"\fR:"2021"
+.nf
+	\fB"threshold"\fR:"00:30"
+.nf
+}
+
+.I parameters:
+.B "latitude" \fR(decimal)
+The decimal value for the latitude co-ordinate of the location you want the time computed for. Example: 51.75865125
+If not specified, it defaults to \fICairo.
+
+.B "longitude" \fR(decimal)
+The decimal value for the longitude co-ordinate of the location you want the time computed for. Example: -1.25387785
+If not specified, it defaults to \fICairo.
+
+.B "method" \fR(number)
+A prayer times calculation method. Methods identify various schools of thought about how to compute the timings.
+If not specified, it defaults to \fI5 - Egyptian General Authority of Survey.
+\fRThis parameter accepts values from 0-12 and 99, as specified below:
+
+0 - Shia Ithna-Ansari
+1 - University of Islamic Sciences, Karachi
+2 - Islamic Society of North America
+3 - Muslim World League
+4 - Umm Al-Qura University, Makkah
+5 - Egyptian General Authority of Survey
+7 - Institute of Geophysics, University of Tehran
+8 - Gulf Region
+9 - Kuwait
+10 - Qatar
+11 - Majlis Ugama Islam Singapura, Singapore
+12 - Union Organization islamic de France
+13 - Diyanet İşleri Başkanlığı, Turkey
+14 - Spiritual Administration of Muslims of Russia
+15 - Moonsighting Committee Worldwide (also requires shafaq paramteer)
+99 - Custom. See https://aladhan.com/calculation-methods
+
+.B "adjustment" \fR(number)
+Number of days to adjust hijri date(s). Example: 1 or 2 or -1 or -2
+
+.B "annual" \fR(boolean)
+If true, we'll ignore the month and return the calendar for the whole year.
+
+.B "year" \fR(number)
+A gregorian calendar year. Example: 2014.
+If not specified, it defaults to \fI2021.
+
+.B "threshold" \fR(hh:mm)
+A threshold time in the form of \fB"hh:mm" \fRthat whenever the elapsed time reach it, It will show up the next prayer,
+instead of the elapsed time. this applicable only when you use \fB\-\-hybrid \fRor \fB\-i \fRflags.
+
+.SH CUSTOMIZATION
+next-prayer can be customized by creating a custom \fI~/.config/nxprayer/config.json \fRand (re)run the \fI'remote_api.py' \fRscript.
+
+.SH AUTHOR
+Abd El-Twab M. Fakhry <\fIabdeltwab.m.fakhry@gmail.com\fR>
+
+.SH LICENSE
+See the LICENSE file for the terms of redistribution.
+
+.SH BUGS
+Consider reporting bugs via opening an issue here (https://github.com/abdeltwabmf/next-prayer/issues).
