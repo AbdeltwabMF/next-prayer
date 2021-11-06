@@ -1,0 +1,120 @@
+#!/bin/bash
+#
+# see 'next-prayer --help' for more info
+
+readonly PREFIX=/usr/local
+readonly DATA_DIR=${PREFIX}/share/next-prayer/calendar
+readonly CONF_DIR=${HOME}/.config/next-prayer
+readonly TEMP_DIR=/tmp/next-prayer
+
+fetch_next_day() {
+	local cur_year
+	local cur_month
+	local cur_day
+
+	cur_year=$(date "+%Y")
+	cur_month=$(date "+%_m" | gawk '{ print $1 }')
+	cur_day=$(date "+%_d" | gawk '{ print $1 }')
+
+	mkdir -p "${TEMP_DIR}"
+
+	jq '.["timings"]' < "${DATA_DIR}/${cur_year}/${cur_month}/${cur_day}" > "${TEMP_DIR}"/timings
+	jq '.["date"]' < "${DATA_DIR}/${cur_year}/${cur_month}/${cur_day}" > "${TEMP_DIR}"/hijri
+
+	sed -i "s/ (.*)\|\"\|{\|}\|,//g" "${TEMP_DIR}"/timings
+	gawk -i inplace -F': ' 'NF { print $2 $1 }' "${TEMP_DIR}"/timings
+
+	sed -i "s/{\|}\|\"\|,\|\ //g; /^[^de].*$/d; /^\s*$/d; s/^.*://g; s/-..-/ /g" "${TEMP_DIR}"/hijri
+	gawk -i inplace 'NR == 2 { print l "." $0 "." r } { l = $1; r = $2 - 1400; }' "${TEMP_DIR}"/hijri
+}
+
+format() {
+	echo "$(echo "$1" \
+		| gawk -F: '{
+		hrs = $1;
+		mod = hrs % 12;
+		mer = "AM";
+
+		if (mod == 0)
+			mod = 12;
+
+		if (mod == 10 || mod == 11 || mod == 12) {
+			if (hrs >= 12)
+				mer = "PM";
+
+			print mod ":" $2, mer;
+		} else {
+			if (hrs > 12)
+				mer = "PM";
+			print "0" mod ":" $2, mer;
+		}
+	}')"
+}
+
+info() {
+	printf "%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n%s\t\t%s\n" \
+		"Flags:" \
+		"-n, --next"     		"The next prayer and its time." \
+		"-p, --previous" 		"The previous prayer and its time." \
+		"-i, --hybrid"  		"Display the elapsed time since the previous prayer until the elapsed time reach threshold time determined in config file, Then it will display the next prayer and its time." \
+		"-e, --elapsed"  		"The elapsed time since the previous prayer." \
+		"-l, --left"    		"The time left until the next prayer." \
+		"-a, --adhan"   		"Display if it's the time for adhan by returning "yes" or "no"." \
+		"-h, --help"    		"Display this help information." \
+		"-v, --version"  		"The current version."
+}
+
+[[ -f "${TEMP_DIR}"/timings ]] || fetch_next_day
+
+cur_time=$(date "+%H:%M")
+
+cat "${TEMP_DIR}"/timings > "${TEMP_DIR}"/input
+echo "${cur_time}  A" >> "${TEMP_DIR}"/input
+
+# run local api and fetch the next vars
+local_api
+
+next_prayer=$(gawk '/next_prayer/ { print $2 }' < "${TEMP_DIR}"/output)
+next_prayer_time=$(gawk '/next_prayer/ { print $3 }' < "${TEMP_DIR}"/output)
+prev_prayer=$(gawk '/prev_prayer/ { print $2 }' < "${TEMP_DIR}"/output)
+prev_prayer_time=$(gawk '/prev_prayer/ { print $3 }' < "${TEMP_DIR}"/output)
+time_left=$(gawk '/time_left/ { print $2 }' < "${TEMP_DIR}"/output)
+elapsed_time=$(gawk '/elapsed_time/ { print $2 }' < "${TEMP_DIR}"/output)
+adhan_time=$(gawk '/adhan_time/ { print $2 }' < "${TEMP_DIR}"/output)
+new_day=$(gawk '/new_day/ { print $2 }' < "${TEMP_DIR}"/output)
+
+#########################################################################
+# Show the elapsed time since last prayer Until the elapsed time reach
+# some point of time determined in config file
+# Then it will show up the next prayer
+#########################################################################
+hybrid() {
+	local threshold
+	threshold=$(jq '.["threshold"]' ${CONF_DIR}/config.json)
+
+	[[ "${threshold}" > "${elapsed_time}" ]] && echo "⚠ ${elapsed_time} since ${prev_prayer}" \
+		|| echo "🕌 ${next_prayer} $(format ${next_prayer_time})"
+}
+
+[[ ${new_day} == "yes" ]] && fetch_next_day
+[[ ${adhan_time} == "yes" ]] && notify-send -t 60000 "Next Prayer" "NOW It's the time for ${next_prayer}"
+
+case "$1" in
+	"--prev"|"-p") echo "🕌 ${prev_prayer} $(format ${prev_prayer_time})" ;;
+	"--left"|"-l") echo "${time_left} until ${next_prayer}" ;;
+	"--elapsed"|"-e") echo "${elapsed_time} since ${prev_prayer}" ;;
+	"--adhan"|"-a") echo "${adhan_time}" ;;
+	"--hybrid"|"-i") hybrid ;;
+	"--help"|"-h") info ;;
+	"--version"|"-v") echo "next-prayer VERSION";;
+	"--next"|"-n"|*) echo "🕌 ${next_prayer} $(format ${next_prayer_time})" ;;
+esac
+
+case "${BLOCK_BUTTON}" in
+	1)
+		notify-send -t 60000 "Next Prayer" "$(printf "%s %s %s\n%s %s %s" "${time_left}" "until" "${next_prayer}" \
+			"${elapsed_time}" "since" "${prev_prayer}" \
+			| awk 'BEGIN { printf "%-8s %-8s %s\n", "Time", "", "Salat"; printf "%-8s %-8s %s\n", "-----", "", "-------" } \
+			{ printf "%-8s %-8s %s\n", $1, $2, $3 }')"
+				;;
+esac

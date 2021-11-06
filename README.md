@@ -1,80 +1,81 @@
-# Next Prayer (nxprayer)
+# next-prayer
 
-Next Islamic prayer, for status bars.
-
----
-
-## Features
-- displays the `next prayer time`.
-- `send notification` if it's the time for a prayer.
-- displays the `time left` until the next prayer.
-- displays the `elapsed time` since the previous prayer.
+Islamic prayers reminder for status bars.
 
 ---
 
-## Usage
+## Usage & Flags
 
 ```
-FLAGS:
-
-	-l, --left  	display the time left until the next prayer.
-	-e,--elapsed	display the elapsed time since the previous prayer.
-	-n, --next  	display the time of the next islamic prayer.
-	-p, --prev  	display the time of the previous islamic prayer.
-	-a, --adhan 	display if it's the time for adhan by returning "yes" or "no".
-	-h, --help  	display this help information.
+-n, --next     		The next prayer and its time.
+-p, --previous 		The previous prayer and its time.
+-i, --hybrid  		Display the elapsed time since the previous prayer until the elapsed time reach threshold time determined in config file, Then it will display the next prayer and its time.
+-e, --elapsed  		The elapsed time since the previous prayer.
+-l, --left    		The time left until the next prayer.
+-a, --adhan   		Display if it's the time for adhan by returning "yes" or "no".
+-h, --help    		Display this help information.
+-v, --version  		The current version.
 ```
 
-##### Terminal
+---
 
-```
-$ nxprayer -n
-🕌 Dhuhr 11:47 AM
+## Setup for status bars:
 
-$ nxprayer -p
-🕌 Sunrise 06:11 AM
+### [dwmblocks](https://github.com/torrinfail/dwmblocks):
 
-$ nxprayer -l
-05:17
+**In config.h add this 4-element Block to the blocks[] array**
 
-$ nxprayer -e
-00:19
-
-$ nxprayer -a
-no
+``` c
+static const Block blocks[] = {
+  /*Icon*/    /*Command*/       /*Update Interval*/  /*Update Signal*/
+  {"🕌",      "next-prayer -i",  29,                  0}
+}
 ```
 
+### [i3blocks](https://github.com/vivien/i3blocks):
 
-##### Status bars:
-If you are using [dwmblocks](https://github.com/torrinfail/dwmblocks) or [i3blocks](https://github.com/vivien/i3blocks) you could put `nxprayer` in your `config` file as a script.
+**In i3blocks config add this section**
 
+```code
+[next-prayer]
+command=next-prayer -i
+interval=29
+label=<span>🕌 </span>
+color=#FF8105
+border=#FF8105
+border_top=1
+border_right=0
+border_bottom=0
+border_left=0
+```
 
-##### Screenshot
+---
 
-![np](nxprayer.png)
+## Snapshot
+
+![np](next-prayer.png)
 
 ---
 
 ## Installation
 
-##### For Arch based systems:
+### For Arch based systems:
 
 ```
-yay -S nxprayer
+yay -S next-prayer
 ```
 
-##### For other distros:
+### For other distros:
 
-##### Dependencies
 **Install the dependencies first.**
 
 `jq` `python3` `libnotify`
 
-And then.
+And then do:
 
-```
-git clone https://github.com/AbdeltwabMF/nxprayer.git
-cd nxprayer
+``` code
+git clone https://github.com/abdeltwabmf/next-prayer.git
+cd next-prayer
 sudo make clean install
 ```
 
@@ -82,4 +83,4 @@ sudo make clean install
 
 ## [License](LICENSE)
 
-Licensed under the GPLv3 License.
+Licensed under the GPL-v3 License.

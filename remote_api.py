@@ -2,27 +2,26 @@
 
 import json
 import os
-from urllib.request import urlopen
+import requests
 
-params_path = "/home/amf/.config/nxprayer/params.json"
-data_path = "/usr/local/share/nxprayer/calendar"
+config_file = "/home/amf/.config/next-prayer/config.json"
+data_path = "/usr/local/share/next-prayer/calendar"
 root_url = "http://api.aladhan.com/v1/calendar?"
 
-if os.path.exists(params_path):
+if os.path.exists(config_file):
     pass
 else:
-    print("Error: ~/.config/nxprayer/params.json not found!.")
+    print("Error: ~/.config/next-prayer/config.json not found!.")
     exit(1)
 
-with open(params_path) as f:
+with open(config_file) as f:
     pms = json.load(f)
 
 years = int(pms["year"])
 url = root_url + "latitude=" + pms["latitude"] + "&longitude=" + pms["longitude"] + "&method=" + pms["method"] + "&annual=" + pms["annual"] + "&adjustment=" + pms["adjustment"]
 
 for i in range(6):
-    with urlopen(url + "&year=" + str(years + i)) as response:
-        calender = json.load(response)
+    calender = requests.get(url + "&year=" + str(years + i)).json()
 
     if calender["status"] == "OK":
         pass
