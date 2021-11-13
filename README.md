@@ -8,7 +8,7 @@ Islamic prayers reminder for status bars.
 
 ```
 -n, --next     		The next prayer and its time.
--p, --previous 		The previous prayer and its time.
+-p, --prev  		The previous prayer and its time.
 -i, --hybrid  		Display the elapsed time since the previous prayer until the elapsed time reach threshold time determined in config file, Then it will display the next prayer and its time.
 -e, --elapsed  		The elapsed time since the previous prayer.
 -l, --left    		The time left until the next prayer.
