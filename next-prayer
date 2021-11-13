@@ -100,7 +100,7 @@ hybrid() {
 [[ ${adhan_time} == "yes" ]] && notify-send -t 60000 "Next Prayer" "NOW It's the time for ${next_prayer}"
 
 case "$1" in
-	"--prev"|"-p") echo "🕌 ${prev_prayer} $(format ${prev_prayer_time})" ;;
+	"--previous"|"-p") echo "🕌 ${prev_prayer} $(format ${prev_prayer_time})" ;;
 	"--left"|"-l") echo "${time_left} until ${next_prayer}" ;;
 	"--elapsed"|"-e") echo "${elapsed_time} since ${prev_prayer}" ;;
 	"--adhan"|"-a") echo "${adhan_time}" ;;
