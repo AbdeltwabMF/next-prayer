@@ -13,7 +13,7 @@ local_api: $(SRC)
 install: local_api
 	mkdir -p $(DESTDIR)$(CONFIG)/next-prayer
 	cp -iv config.json $(DESTDIR)$(CONFIG)/next-prayer/config.json
-	chown -R "$(LGUSER):$(LGUSER)" $(DESTDIR)$(CONFIG)/next-prayer
+	chown -R "$(LGUSER):$(LGGROUP)" $(DESTDIR)$(CONFIG)/next-prayer
 	chmod 754 $(DESTDIR)$(CONFIG)/next-prayer
 	chmod 644 $(DESTDIR)$(CONFIG)/next-prayer/config.json
 	mkdir -p $(DESTDIR)$(LPREFIX)/share/next-prayer/calendar/{2021..2026}/{1..12}
@@ -22,14 +22,14 @@ install: local_api
 	python3 remote_api.py
 	sed -i "s|^config_file.*|config_file = \"$(CONFIG)/next-prayer/config.json\"|g" remote_api.py
 	sed -i "s|^data_path.*|data_path = \"$(LPREFIX)/share/next-prayer/calendar\"|g" remote_api.py
-	chown -R "$(LGUSER):$(LGUSER)" $(DESTDIR)$(LPREFIX)/share/next-prayer
+	chown -R "$(LGUSER):$(LGGROUP)" $(DESTDIR)$(LPREFIX)/share/next-prayer
 	chmod -R 754 $(DESTDIR)$(LPREFIX)/share/next-prayer
 	mkdir -p $(DESTDIR)$(LPREFIX)/bin
 	cp -f local_api $(DESTDIR)$(LPREFIX)/bin
 	cp -f remote_api.py $(DESTDIR)$(LPREFIX)/bin
 	cp -f next-prayer $(DESTDIR)$(LPREFIX)/bin
 	chmod 755 $(DESTDIR)$(LPREFIX)/bin/local_api
-	chown "$(LGUSER):$(LGUSER)" $(DESTDIR)$(LPREFIX)/bin/remote_api.py
+	chown "$(LGUSER):$(LGGROUP)" $(DESTDIR)$(LPREFIX)/bin/remote_api.py
 	chmod 755 $(DESTDIR)$(LPREFIX)/bin/next-prayer
 	sed "s/VERSION/$(VERSION)/g" < next-prayer > $(DESTDIR)$(LPREFIX)/bin/next-prayer
 	mkdir -p $(DESTDIR)$(MAN)/man1

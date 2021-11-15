@@ -13,6 +13,7 @@ MAN = $(LPREFIX)/man
 DOC = $(SPREFIX)/doc
 LIC = $(SPREFIX)/licenses
 LGUSER = $(shell users | awk '{ print $$1 }')
+LGGROUP = $(shell id -gn')
 CONFIG = /home/$(LGUSER)/.config
 
 # C++ flags
