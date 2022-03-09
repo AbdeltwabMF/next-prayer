@@ -34,7 +34,7 @@ class compare {
 	bool operator() (const pair <string, string> &lhs, const pair <string, string> &rhs) const {
 	if(lhs.second != rhs.second)
 			return lhs.second < rhs.second;
-		else
+	else
 			return lhs.first < rhs.first;
 	}
 };
