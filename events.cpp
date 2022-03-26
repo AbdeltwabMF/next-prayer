@@ -237,6 +237,9 @@ int main(int argc, char **argv) {
     } else if (strcmp(argv[1], "--adhan") == 0) {
       cout << is_adhan << "\n";
       return 0;
+    } else if (strcmp(argv[1], "--hijri") == 0) {
+      cout << GetHijriDate() << "\n";
+      return 0;
     }
   }
 }
