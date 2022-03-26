@@ -30,4 +30,8 @@
 *.exe
 *.out
 *.app
-local_api
+events
+
+# Logs
+*.log
+*__pycache__/*
