@@ -2,6 +2,9 @@
 
 # Redirect to cpp file
 events "$1"
+if [[ "$1" = "--hijri" ]]; then
+	exit
+fi
 
 # Notify on click
 case "${BLOCK_BUTTON}" in

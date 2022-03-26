@@ -152,15 +152,15 @@ const string GetCurrentTimeDate() {
   return buf;
 }
 
-const string GetHijriDate() {
+string GetHijriDate() {
   string day, month_ar, month_en, year;
   cin.ignore();
   getline(cin, day);
   getline(cin, month_ar);
   getline(cin, month_en);
   getline(cin, year);
-
-  return day + "." + month_ar + "." + year;
+  string ret = day + "." + month_ar + "." + year;
+  return ret;
 }
 
 void ReadData() {
@@ -180,6 +180,7 @@ int main(int argc, char **argv) {
   ReadData();
   cur = make_pair("A", GetCurrentTimeDate().substr(0, 5));
   mawaqeet.insert(cur);
+  string hijri = GetHijriDate();
 
   _next = NextPrayer(cur);
   _prev = PrevPrayer(cur);
@@ -238,7 +239,7 @@ int main(int argc, char **argv) {
       cout << is_adhan << "\n";
       return 0;
     } else if (strcmp(argv[1], "--hijri") == 0) {
-      cout << GetHijriDate() << "\n";
+      cout << hijri << "\n";
       return 0;
     }
   }
