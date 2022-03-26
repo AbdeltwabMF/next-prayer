@@ -35,20 +35,15 @@ using ::std::make_pair;
 using ::std::to_string;
 
 template <class T, typename Comp = less <T> >
-using indexed_set = tree <
-  T,
-  null_type,
-  Comp,
-  rb_tree_tag,
-  tree_order_statistics_node_update
-  >;
+using indexed_set = tree<T, null_type, Comp, rb_tree_tag,
+  tree_order_statistics_node_update>;
 
 void Fast() {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
 }
 
-ostream &operator << (ostream &os, const pair<string, string> &p) {
+ostream &operator<<(ostream &os, const pair<string, string> &p) {
   os << p.first << " " << p.second;
   return os;
 }
@@ -68,11 +63,9 @@ class Compare {
 };
 
 const int TEN = 10;
-const string VERSION = "v2.0.0";
-string INPUT_DIR = "/home/amf/.local/share/next-prayer/";
-string OUTPUT_DIR = "/tmp/next-prayer/";
+const char VERSION[] = "v2.0.0";
 
-void File(const char* fread) {
+void File(const char*fread) {
   freopen(fread, "r", stdin);
   /* freopen(fwrite, "w", stdout); */
 }
@@ -82,7 +75,7 @@ pair <string, string> cur, _next, _prev;
 
 int
 CurrPrayer(pair <string, string> cur) {
-  /* return the number of items in the set that are strictly smaller than cur */
+  /* return number of items in the set that are strictly smaller than cur */
   return mawaqeet.order_of_key(cur);
 }
 
@@ -151,12 +144,15 @@ Make12(const string &x) {
     return make_pair(GetTimeDifference("12:00", x), "PM");
 }
 
+
+struct tm *localtime_r(const time_t *timep, struct tm *result);
+
 const string
 GetCurrentTimeDate() {
-  time_t     now = time(0);
-  struct tm  tstruct;
-  char       buf[80];
-  tstruct = *localtime(&now);
+  char buf[80];
+  const time_t now = time(0);
+  struct tm tstruct;
+  tstruct = *localtime_r(&now, &tstruct);
   strftime(buf, sizeof(buf), "%H:%M %d-%m-%Y", &tstruct);
 
   return buf;
@@ -185,7 +181,9 @@ ReadData() {
 
 int main(int argc, char** argv) {
   Fast();
-  File((INPUT_DIR + GetCurrentTimeDate().substr(6) + ".txt").c_str());
+  File(("/home/amf/.local/share/next-prayer/"
+    + GetCurrentTimeDate().substr(6)
+    + ".txt").c_str());
 
   ReadData();
   cur = make_pair("A", GetCurrentTimeDate().substr(0, 5));
@@ -194,28 +192,35 @@ int main(int argc, char** argv) {
   _next = NextPrayer(cur);
   _prev = PrevPrayer(cur);
 
-  string next_prayer  =  _next.first + " " + Make12(_next.second).first + " " + Make12(_next.second).second;
-  string prev_prayer  =  _prev.first + " " + Make12(_prev.second).first + " " + Make12(_prev.second).second;
-  string time_left    =  GetTimeDifference(cur.second, _next.second);
-  string elapsed_time =  GetTimeDifference(_prev.second, cur.second);
-  string is_adhan     =  AdhanNow(cur, _next);
-  string is_newday    =  FetchNext(cur);
-  string hijri_date   =  GetHijriDate();
+  string next_prayer = _next.first + " " + Make12(_next.second).first
+    + " "
+    + Make12(_next.second).second;
+  string prev_prayer = _prev.first + " " + Make12(_prev.second).first
+    + " "
+    + Make12(_prev.second).second;
+  string time_left = GetTimeDifference(cur.second, _next.second);
+  string elapsed_time = GetTimeDifference(_prev.second, cur.second);
+  string is_adhan = AdhanNow(cur, _next);
+  string is_newday = FetchNext(cur);
+  string hijri_date = GetHijriDate();
 
   // Read args from command line
   if (argc == 2) {
     if (strcmp(argv[1], "--help") == 0) {
-      cout << "Usage: " << argv[0] << " [options...]" << "\n";
-      cout << "Options:\n";
-      cout << " --next      " << "The next prayer and its time." << "\n";
-      cout << " --prev      " << "The previous prayer and its time." << "\n";
-      cout << " --hybrid    " << "The elapsed time since the previous prayer as far as the elapsed time <= THRESHOLD." << "\n";
-      cout << " --left      " << "The time left till the next prayer." << "\n";
-      cout << " --elapsed   " << "The time elapsed since the previous prayer." << "\n";
-      cout << " --adhan     " << "Whether the current time is adhan or not." << "\n";
-      cout << " --hijri     " << "The current hijri date." << "\n";
-      cout << " --help      " << "Display this help message." << "\n\n\n";
-      cout << "This is not the full help, use (man next_prayer) for the manual." << "\n";
+      printf("Usage: %s [--help] [--version] [--options...]\n", argv[0]);
+      printf("Options:\n");
+      printf("  --help\t\tShow this help message and exit.\n");
+      printf("  --version\t\tShow version information and exit.\n");
+      printf("  --next\t\tShow next prayer time.\n");
+      printf("  --prev\t\tShow previous prayer time.\n");
+      printf("  --left\t\tShow time left to next prayer.\n");
+      printf("  --elapsed\t\tShow elapsed time since last prayer.\n");
+      printf("  --adhan\t\tShow if adhan is now playing.\n");
+      printf("  --hijri\t\tShow hijri date.\n");
+      printf("  --hybrid\t\tThe elapsed time since the previous prayer as");
+      printf(" far as the elapsed time <= THRESHOLD.\n\n");
+      printf("This is not the full help, use (man next_prayer) for the");
+      printf(" manual.\n");
       return 0;
     } else if (strcmp(argv[1], "--version") == 0) {
       cout << "Version: " << VERSION << "\n";

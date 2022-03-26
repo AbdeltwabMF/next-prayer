@@ -3,8 +3,11 @@
 
 SRC = events.cpp
 all: events
+VERSION = $(shell awk '/VERSION\[\] =/{print $$5}' events.cpp | sed 's/\"\|;//g')
 
 events: $(SRC)
+	sed -i "s/home.*\/.local/home\/$(USER)\/.local/" events.cpp
+	sed -i "s/VERSION/$(VERSION)/" next-prayer.1
 	@echo "Installing events..."
 	g++ -std=c++20 -o events $(SRC)
 

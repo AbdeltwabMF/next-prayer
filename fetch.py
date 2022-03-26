@@ -16,10 +16,11 @@ CONFIG_PREFIX = HOME + "/.config/"
 
 CONF_DIR = os.path.join(CONFIG_PREFIX, "next-prayer/")
 DATA_DIR = os.path.join(LOCAL_PREFIX, "share/next-prayer/")
-MAN_DIR  = os.path.join(LOCAL_PREFIX, "share/man/man1/")
-BIN_DIR  = os.path.join(LOCAL_PREFIX, "bin/")
+MAN_DIR = os.path.join(LOCAL_PREFIX, "share/man/man1/")
+BIN_DIR = os.path.join(LOCAL_PREFIX, "bin/")
 
 ROOT_URL = "http://api.aladhan.com/v1/calendar?"
+
 
 def check_dirs():
     """
@@ -36,6 +37,7 @@ def check_dirs():
         os.chmod(DATA_DIR, 0o755)
     if not os.path.exists(BIN_DIR):
         os.makedirs(BIN_DIR, exist_ok=True)
+
 
 def check_files():
     """
@@ -81,7 +83,7 @@ def write_data(data):
     for _month in year:
         for _day in _month:
             # The day ID
-            date = _day['date']['gregorian']['date']
+            date = _day["date"]["gregorian"]["date"]
 
             # Write the data to a file
             with open(DATA_DIR + date + ".txt", "w", encoding="utf-8") as file:
@@ -96,6 +98,7 @@ def write_data(data):
                 file.write(f"{_day['date']['hijri']['month']['en']}\n")
                 file.write(f"{_day['date']['hijri']['year']}\n")
 
+
 def fetch_data():
     """
     Fetch the data from the API and save it locally.
@@ -107,9 +110,11 @@ def fetch_data():
         print("Error fetching data from API")
         sys.exit(1)
 
+
 def __main__():
     check_dirs()
     check_files()
     fetch_data()
+
 
 __main__()
