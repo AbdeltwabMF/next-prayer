@@ -1,39 +1,44 @@
-.TH "NEXT-PRAYER" "1" "2021 Nov 6" next-prayer-VERSION
+.TH "NEXT-PRAYER" "1" "2022 Mar 26" next-prayer-v2.0.0
 
 .SH NAME
 next-prayer \- Next Islamic prayer.
 
 .SH SYNOPSIS
 .B next-prayer
-.RB [ \-n ]
+.RB [ \-\-next ]
 .nf
 .fi
 .B next-prayer
-.RB [ \-p ]
+.RB [ \-\-prev ]
 .nf
 .fi
 .B next-prayer
-.RB [ \-i ]
+.RB [ \-\-hybrid ]
 .nf
 .fi
 .B next-prayer
-.RB [ \-e ]
+.RB [ \-\-elapsed ]
 .nf
 .fi
 .B next-prayer
-.RB [ \-l ]
+.RB [ \-\-left ]
 .nf
 .fi
 .B next-prayer
-.RB [ \-a ]
+.RB [ \-\-adhan ]
 .nf
 .fi
 .B next-prayer
-.RB [ \-h ]
+.RB [ \-\-hijri ]
 .nf
 .fi
 .B next-prayer
-.RB [ \-v ]
+.RB [ \-\-version ]
+.nf
+.fi
+.B next-prayer
+.RB [ \-\-help ]
+
 
 .SH DESCRIBTION
 .B
@@ -42,59 +47,45 @@ Islamic prayers reminder for status bars.
 
 .SH OPTIONS
 .TP
-.BR \-n ", " \-\-next
+.BR \-\-next
 The next prayer and its time.
 .TP
-.BR \-p ", " \-\-prev
+.BR \-\-prev
 The previous prayer and its time.
 .TP
-.BR \-i ", " \-\-hybrid
-Display the elapsed time since the previous prayer until the elapsed time reach threshold time determined in config file, Then it will display the next prayer and its time.
+.BR \-\-hybrid
+The elapsed time since the previous prayer as far as the elapsed time <= THRESHOLD.
 .TP
-.BR \-e ", " \-\-elapsed
+.BR \-\-elapsed
 The elapsed time since the previous prayer.
 .TP
-.BR \-l ", " \-\-left
+.BR \-\-left
 The time left until the next prayer.
 .TP
-.BR \-a ", " \-\-adhan
-Display if it's the time for adhan by returning "yes" or "no".
+.BR \-\-adhan
+Whether the current time is adhan or not.
 .TP
-.BR \-h ", " \-\-help
-Display this help information.
+.BR \-\-hijri
+The current hijri date.
 .TP
-.BR \-v ", " \-\-version
+.BR \-\-version
 The current version.
+.TP
+.BR \-\-help
+Display this help message.
 
 .SH
 FILES
 .TP
-.I /tmp/next-prayer
-The cached data that is used by the executable file.
-.TP
-.I /usr/local/bin/next-prayer
+.I $HOME/.local/bin/next-prayer
 The executable file.
 .TP
-.I ~/.config/next-prayer/config.json
+.I $HOME/.local/bin/fetch.py
+Run manually each time you update the config file.
+.TP
+.I $HOME/.config/next-prayer/config.py
 The config file.
 .nf
-{
-.nf
-	\fB"latitude"\fR:"24.494142697334386",
-.nf
-	\fB"longitude"\fR:"32.869780209307066",
-.nf
-	\fB"method"\fR:"5",
-.nf
-	\fB"adjustment"\fR:"1",
-.nf
-	\fB"annual"\fR:"true",
-.nf
-	\fB"year"\fR:"2021"
-.nf
-	\fB"threshold"\fR:"00:30"
-.nf
-}
 
 .I parameters:
 .B "latitude" \fR(decimal)
@@ -135,14 +126,15 @@ If true, we'll ignore the month and return the calendar for the whole year.
 
 .B "year" \fR(number)
 A gregorian calendar year. Example: 2014.
-If not specified, it defaults to \fI2021.
+If not specified, it defaults to is the current year.
 
 .B "threshold" \fR(hh:mm)
 A threshold time in the form of \fB"hh:mm" \fRthat whenever the elapsed time reach it, It will show up the next prayer,
-instead of the elapsed time. this applicable only when you use \fB\-\-hybrid \fRor \fB\-i \fRflags.
+instead of the elapsed time. this applicable only when you use \fB\-\-hybrid \fRflag.
+\fBtemporarily moved to the executable file\fR.
 
 .SH CUSTOMIZATION
-next-prayer can be customized by creating a custom \fI~/.config/nxprayer/config.json \fRand (re)run the \fI'remote_api.py' \fRscript.
+next-prayer can be customized by editing the python dictionary config file \fI$HOME/.config/next-prayer/config.py \fRand (re)run the \fI'fetch.py' \fRscript.
 
 .SH AUTHOR
 Abd El-Twab M. Fakhry <\fIabdeltwab.m.fakhry@gmail.com\fR>
