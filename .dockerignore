@@ -1,0 +1,12 @@
+CHANGELOG.md
+.git
+.github
+.gitignore
+.mypy_cache
+next-prayer.png
+np_main
+PKGBUILD
+__pycache__
+README.md
+RELEASE_NOTES
+.SRCINFO

@@ -62,13 +62,31 @@ class Compare {
 };
 // clang-format on
 
+// ANSI color for terminal output
+/* const char BLACK[] = "\033[30m"; */
+/* const char RED[] = "\033[31m"; */
+/* const char GREEN[] = "\033[32m"; */
+const char YELLOW[] = "\033[33m";
+/* const char BLUE[] = "\033[34m"; */
+const char MAGENTA[] = "\033[35m";
+/* const char CYAN[] = "\033[36m"; */
+/* const char WHITE[] = "\033[37m"; */
+const char RESET[] = "\033[0m";
+
+// ANSI color for terminal output (bold)
+/* const char BOLD_BLACK[] = "\033[1;30m"; */
+const char BOLD_RED[] = "\033[1;31m";
+const char BOLD_GREEN[] = "\033[1;32m";
+const char BOLD_YELLOW[] = "\033[1;33m";
+/* const char BOLD_BLUE[] = "\033[1;34m"; */
+const char BOLD_MAGENTA[] = "\033[1;35m";
+const char BOLD_CYAN[] = "\033[1;36m";
+const char BOLD_WHITE[] = "\033[1;37m";
+
 const int TEN = 10;
 const char VERSION[] = "v2.0.0";
 
-void File(const char *fread) {
-  freopen(fread, "r", stdin);
-  /* freopen(fwrite, "w", stdout); */
-}
+void File(const char *fread) { freopen(fread, "r", stdin); }
 
 indexed_set<pair<string, string>, Compare> mawaqeet;
 pair<string, string> cur, _next, _prev;
@@ -152,20 +170,47 @@ const string GetCurrentTimeDate() {
   return buf;
 }
 
-string GetHijriDate() {
+string GetHijriDate(string lang) {
   string day, month_ar, month_en, year;
   cin.ignore();
   getline(cin, day);
   getline(cin, month_ar);
   getline(cin, month_en);
   getline(cin, year);
-  string ret = day + "." + month_ar + "." + year;
-  return ret;
+
+  if (lang == "ar")
+    return day + "-" + month_ar + "-" + year;
+  else
+    return day + "-" + month_en + "-" + year;
+}
+
+void PrintAll() {
+  cout << BOLD_CYAN << "Prayer:\t\t" << BOLD_MAGENTA << "Time:\n" << RESET;
+  cout << BOLD_CYAN << "-------\t\t" << BOLD_MAGENTA << "-----\n" << RESET;
+
+  for (auto it = mawaqeet.begin(); it != mawaqeet.end(); ++it) {
+    if (it->first == "A")
+      continue;
+    pair<string, string> cur = Make12(it->second);
+    cout << BOLD_YELLOW << it->first << "\t\t" << BOLD_MAGENTA << cur.first
+         << " " << cur.second << "\n"
+         << RESET;
+  }
 }
 
 void ReadData() {
   string _salat, _time;
-  for (int i = 0; i < 6; ++i) {
+  if (!(cin >> _salat >> _time)) {
+    system("np_fetch.py");
+    if (!(cin >> _salat >> _time)) {
+      cout << BOLD_RED << "Unable to read data\n" << RESET;
+      cout << YELLOW << "Run \"make clean install\" first!\n" << RESET;
+      exit(1);
+    }
+  }
+
+  mawaqeet.insert(make_pair(_salat, _time));
+  for (int i = 1; i < 6; ++i) {
     cin >> _salat >> _time;
     mawaqeet.insert(make_pair(_salat, _time));
   }
@@ -173,14 +218,14 @@ void ReadData() {
 
 int main(int argc, char **argv) {
   Fast();
-  File(("/home/amf/.local/share/next-prayer/" + GetCurrentTimeDate().substr(6) +
+  File(("IAMUName/.local/share/next-prayer/" + GetCurrentTimeDate().substr(6) +
         ".txt")
            .c_str());
 
   ReadData();
   cur = make_pair("A", GetCurrentTimeDate().substr(0, 5));
   mawaqeet.insert(cur);
-  string hijri = GetHijriDate();
+  string hijri = GetHijriDate("ar");
 
   _next = NextPrayer(cur);
   _prev = PrevPrayer(cur);
@@ -193,28 +238,30 @@ int main(int argc, char **argv) {
   string elapsed_time = GetTimeDifference(_prev.second, cur.second);
   string is_adhan = AdhanNow(cur, _next);
   string is_newday = FetchNext(cur);
-  string hijri_date = GetHijriDate();
 
   // Read args from command line
   if (argc == 2) {
     if (strcmp(argv[1], "--help") == 0) {
-      printf("Usage: %s [--help] [--version] [--options...]\n", argv[0]);
-      printf("Options:\n");
-      printf("  --help\t\tShow this help message and exit.\n");
-      printf("  --version\t\tShow version information and exit.\n");
-      printf("  --next\t\tShow next prayer time.\n");
-      printf("  --prev\t\tShow previous prayer time.\n");
-      printf("  --left\t\tShow time left to next prayer.\n");
-      printf("  --elapsed\t\tShow elapsed time since last prayer.\n");
-      printf("  --adhan\t\tShow if adhan is now playing.\n");
-      printf("  --hijri\t\tShow hijri date.\n");
-      printf("  --hybrid\t\tThe elapsed time since the previous prayer as");
-      printf(" far as the elapsed time <= THRESHOLD.\n\n");
-      printf("This is not the full help, use (man next_prayer) for the");
-      printf(" manual.\n");
+      cout << MAGENTA << "Usage: " << BOLD_MAGENTA << argv[0] << RESET
+           << MAGENTA << " [--help] [--version] [--options...]\n\n";
+      cout << BOLD_YELLOW << "Options:\n" << BOLD_WHITE;
+      cout << "  --help\t\tShow this help message and exit.\n";
+      cout << "  --version\t\tShow version information and exit.\n";
+      cout << "  --next\t\tShow next prayer time.\n";
+      cout << "  --all\t\t\tShow all timings.\n";
+      cout << "  --prev\t\tShow previous prayer time.\n";
+      cout << "  --left\t\tShow time left to next prayer.\n";
+      cout << "  --elapsed\t\tShow elapsed time since last prayer.\n";
+      cout << "  --adhan\t\tShow if adhan is now playing.\n";
+      cout << "  --hijri\t\tShow hijri date.\n";
+      cout << "  --hybrid\t\tThe elapsed time since the previous prayer as";
+      cout << " far as the elapsed time <= THRESHOLD.\n\n" << RESET;
+      cout << YELLOW
+           << "This is not the full help, use (man next_prayer) for the";
+      cout << " manual.\n" << RESET;
       return 0;
     } else if (strcmp(argv[1], "--version") == 0) {
-      cout << "Version: " << VERSION << "\n";
+      cout << "Version: " << BOLD_GREEN << VERSION << "\n" << RESET;
       return 0;
     } else if (strcmp(argv[1], "--hybrid") == 0) {
       if (elapsed_time <= "00:30") {
@@ -228,6 +275,9 @@ int main(int argc, char **argv) {
       return 0;
     } else if (strcmp(argv[1], "--prev") == 0) {
       cout << _prev.first << " " << Make12(_prev.second) << "\n";
+      return 0;
+    } else if (strcmp(argv[1], "--all") == 0) {
+      PrintAll();
       return 0;
     } else if (strcmp(argv[1], "--elapsed") == 0) {
       cout << elapsed_time << " since " << _prev.first << "\n";

@@ -30,8 +30,12 @@
 *.exe
 *.out
 *.app
-events
+np_main
 
 # Logs
 *.log
 *__pycache__/*
+
+*.pyc
+*.pyo
+.mypy_cache
