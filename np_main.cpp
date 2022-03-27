@@ -170,8 +170,7 @@ const string GetCurrentTimeDate() {
   return buf;
 }
 
-string
-GetHijriDate(string lang) {
+string GetHijriDate(string lang) {
   string day, month_ar, month_en, year;
   cin.ignore();
   getline(cin, day);
