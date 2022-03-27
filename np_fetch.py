@@ -8,8 +8,8 @@
 import os
 import sys
 
-from requests import get, HTTPError, URLRequired,  ConnectTimeout, ReadTimeout
 from np_config import get_api_params
+from requests import ConnectTimeout, HTTPError, ReadTimeout, URLRequired, get
 
 HOME = os.path.expanduser("~")
 LOCAL_PREFIX = HOME + "/.local/"
@@ -30,6 +30,7 @@ BLUE = "\033[1;34m"
 PURPLE = "\033[1;35m"
 CYAN = "\033[1;36m"
 WHITE = "\033[1;37m"
+
 
 def check_dirs():
     """
@@ -115,7 +116,7 @@ def fetch_data():
     """
     Fetch the data from the API and save it locally.
     """
-    try :
+    try:
         print(f"{BLUE}Fetching data{WHITE}")
         response = get(get_url())
         if response.status_code == 200:
@@ -124,11 +125,7 @@ def fetch_data():
         else:
             print(f"{RED}Could not fetch data{WHITE}\n")
             sys.exit(1)
-    except (ConnectionError,
-            HTTPError,
-            URLRequired,
-            ConnectTimeout,
-            ReadTimeout) as ex:
+    except (ConnectionError, HTTPError, URLRequired, ConnectTimeout, ReadTimeout) as ex:
         print(f"{RED}Could not fetch data{WHITE}\n")
         print(ex)
         sys.exit(1)
