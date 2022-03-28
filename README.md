@@ -47,7 +47,7 @@ make clean install
 
 For `windows users or Docker` version
 
-Pull the image from [Docker Hub](https://hub.docker.com/repository/docker/abdeltwabmf/next-prayer), and run the following command:
+- Pull the image from [Docker Hub](https://hub.docker.com/repository/docker/abdeltwabmf/next-prayer), and run the following command:
 ```bash
 docker pull abdeltwabmf/next-prayer:latest
 ```
@@ -55,6 +55,19 @@ docker pull abdeltwabmf/next-prayer:latest
 Verify the install
 ```bash
 docker container run --rm  abdeltwabmf/next-prayer np_main --version
+```
+`Version: v2.0.0`
+
+- Or build it yourself
+```bash
+git clone https://github.com/abdeltwabmf/next-prayer.git
+cd next-prayer
+docker build -t next-prayer .
+```
+
+Verify the build
+```bash
+docker container run --rm next-prayer np_main --version
 ```
 `Version: v2.0.0`
 
