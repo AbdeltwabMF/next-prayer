@@ -63,8 +63,8 @@ def check_files():
             pass
         elif os.path.exists(BIN_DIR + "np_config.py"):
             os.symlink(BIN_DIR + "np_config.py", CONF_DIR + "np_config.py")
-        elif current_working_dir != BIN_DIR and os.path.exists("np_config.py"):
-            os.system(f"cp -u np_config.py {BIN_DIR}")
+        elif current_working_dir != BIN_DIR and os.path.exists("src/np_config.py"):
+            os.system(f"cp -u src/np_config.py {BIN_DIR}")
             os.symlink(BIN_DIR + "np_config.py", CONF_DIR + "np_config.py")
         else:
             print(f"{RED}Could not find config file{WHITE}\n")
