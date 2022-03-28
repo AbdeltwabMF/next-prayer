@@ -1,10 +1,11 @@
 # next-prayer - Next Islamic prayer
 .POSIX:
 
-VERSION = $(shell awk '/VERSION\[\] =/ {print $$5}' np_main.cpp | sed "s/\"\|;//g")
+VERSION = $(shell awk '/VERSION\[\] =/ {print $$5}' src/np_main.cpp | sed "s/\"\|;//g")
 
-SRC = *.cpp
-HDR = *.h
+SHELL := /bin/bash
+SRC = src/*.cpp
+HDR = src/*.h
 
 CC = g++
 CFLAGS = -Wall -Wextra -Werror -std=c++20 -pedantic -O3 -DNDEBUG
@@ -35,19 +36,19 @@ BWHITE=\033[1;37m
 
 np_main: $(SRC)
 	@printf "%b" "$(YELLOW)Compiling the source code...$(WHITE)\n"
-	sed -i "s|IAMUName|$(HOME)|" np_main.cpp
+	sed -i "s|IAMUName|$(HOME)|" src/np_main.cpp
 	$(CC) $(CFLAGS) -o np_main $(SRC)
-	sed -i "s|$(HOME)|IAMUName|" np_main.cpp
+	sed -i "s|$(HOME)|IAMUName|" src/np_main.cpp
 	@printf "%b" "$(BGREEN)Compilation Done!$(NC)\n\n"
 
 install: np_main
 	@printf "%b" "$(PURPLE)Fetching API Data...$(WHITE)\n"
-	python3 np_fetch.py
-	cp -u np_fetch.py $(LOCAL_PREFIX)/bin/
+	python3 src/np_fetch.py
+	cp -u src/np_fetch.py $(LOCAL_PREFIX)/bin/
 	cp -u np_main $(LOCAL_PREFIX)/bin/
-	cp -u next-prayer $(LOCAL_PREFIX)/bin/
+	cp -u src/next-prayer $(LOCAL_PREFIX)/bin/
 	mkdir -p $(LOCAL_PREFIX)/share/man/man1/
-	sed "s/VERSION/$(VERSION)/" next-prayer.1 > $(LOCAL_PREFIX)/share/man/man1/next-prayer.1
+	sed "s/VERSION/$(VERSION)/" src/next-prayer.1 > $(LOCAL_PREFIX)/share/man/man1/next-prayer.1
 	@printf "%b" "$(BCYAN)next-prayer$(BGREEN) Installed Successfully!$(NC)\n"
 
 uninstall:

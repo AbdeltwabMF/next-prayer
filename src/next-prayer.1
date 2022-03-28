@@ -17,6 +17,10 @@ next-prayer \- Next Islamic prayer.
 .nf
 .fi
 .B next-prayer
+.RB [ \-\-all ]
+.nf
+.fi
+.B next-prayer
 .RB [ \-\-elapsed ]
 .nf
 .fi
@@ -56,8 +60,11 @@ The previous prayer and its time.
 .BR \-\-hybrid
 The elapsed time since the previous prayer as far as the elapsed time <= THRESHOLD.
 .TP
+.BR \-\-all
+Show all timings.
+.TP
 .BR \-\-elapsed
-The elapsed time since the previous prayer.
+The time elapsed since the previous prayer.
 .TP
 .BR \-\-left
 The time left until the next prayer.
@@ -69,7 +76,7 @@ Whether the current time is adhan or not.
 The current hijri date.
 .TP
 .BR \-\-version
-The current version.
+Display the version.
 .TP
 .BR \-\-help
 Display this help message.
@@ -80,7 +87,7 @@ FILES
 .I $HOME/.local/bin/next-prayer
 The executable file.
 .TP
-.I $HOME/.local/bin/fetch.py
+.I $HOME/.local/bin/np_fetch.py
 Run manually each time you update the config file.
 .TP
 .I $HOME/.config/next-prayer/config.py
@@ -134,7 +141,7 @@ instead of the elapsed time. this applicable only when you use \fB\-\-hybrid \fR
 \fBtemporarily moved to the executable file\fR.
 
 .SH CUSTOMIZATION
-next-prayer can be customized by editing the python dictionary config file \fI$HOME/.config/next-prayer/config.py \fRand (re)run the \fI'fetch.py' \fRscript.
+next-prayer can be customized by editing the python dictionary \fBconfig file\fR \fI$HOME/.config/next-prayer/config.py \fRand (re)run the \fI'python3 np_fetch.py' \fRcommand.
 
 .SH AUTHOR
 Abd El-Twab M. Fakhry <\fIabdeltwab.m.fakhry@gmail.com\fR>
