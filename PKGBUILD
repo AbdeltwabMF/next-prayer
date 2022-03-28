@@ -21,7 +21,7 @@ sha1sums=('SKIP')
 
 pkgver() {
 	cd "${pkgname}"
-	printf "%s.r%s.%s" "$(awk '/VERSION\[\] =/{print $5}' events.cpp | sed 's/\"\|;//g')" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+	printf "%s.r%s.%s" "$(awk '/VERSION\[\] =/{print $5}' src/np_main.cpp | sed 's/\"\|;//g')" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 build() {
