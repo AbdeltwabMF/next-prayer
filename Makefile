@@ -1,49 +1,69 @@
 # next-prayer - Next Islamic prayer
 .POSIX:
 
-include config.mk
+VERSION = $(shell awk '/VERSION\[\] =/ {print $$5}' src/np_main.cpp | sed "s/\"\|;//g")
 
-SRC = local_api.cpp
+SHELL := /bin/bash
+SRC = src/*.cpp
+HDR = src/*.h
 
-all: local_api
+CC = g++
+CFLAGS = -Wall -Wextra -Werror -std=c++20 -pedantic -O3 -DNDEBUG
 
-local_api: $(SRC)
-	g++ $(WFLAGS) $(DFLAGS) $(OFLAGS) $(CPP) -o local_api $(SRC)
+LOCAL_PREFIX = $(HOME)/.local
+CONFIG_PREFIX = $(HOME)/.config
 
-install: local_api
-	mkdir -p $(DESTDIR)$(CONFIG)/next-prayer
-	cp -iv config.json $(DESTDIR)$(CONFIG)/next-prayer/config.json
-	chown -R "$(LGUSER):$(LGGROUP)" $(DESTDIR)$(CONFIG)/next-prayer
-	chmod 754 $(DESTDIR)$(CONFIG)/next-prayer
-	chmod 644 $(DESTDIR)$(CONFIG)/next-prayer/config.json
-	mkdir -p $(DESTDIR)$(LPREFIX)/share/next-prayer/calendar/{2021..2026}/{1..12}
-	sed -i "s|^config_file.*|config_file = \"$(DESTDIR)$(CONFIG)/next-prayer/config.json\"|g" remote_api.py
-	sed -i "s|^data_path.*|data_path = \"$(DESTDIR)$(LPREFIX)/share/next-prayer/calendar\"|g" remote_api.py
-	python3 remote_api.py
-	sed -i "s|^config_file.*|config_file = \"$(CONFIG)/next-prayer/config.json\"|g" remote_api.py
-	sed -i "s|^data_path.*|data_path = \"$(LPREFIX)/share/next-prayer/calendar\"|g" remote_api.py
-	chown -R "$(LGUSER):$(LGGROUP)" $(DESTDIR)$(LPREFIX)/share/next-prayer
-	chmod -R 754 $(DESTDIR)$(LPREFIX)/share/next-prayer
-	mkdir -p $(DESTDIR)$(LPREFIX)/bin
-	cp -f local_api $(DESTDIR)$(LPREFIX)/bin
-	cp -f remote_api.py $(DESTDIR)$(LPREFIX)/bin
-	cp -f next-prayer $(DESTDIR)$(LPREFIX)/bin
-	chmod 755 $(DESTDIR)$(LPREFIX)/bin/local_api
-	chown "$(LGUSER):$(LGGROUP)" $(DESTDIR)$(LPREFIX)/bin/remote_api.py
-	chmod 755 $(DESTDIR)$(LPREFIX)/bin/next-prayer
-	sed "s/VERSION/$(VERSION)/g" < next-prayer > $(DESTDIR)$(LPREFIX)/bin/next-prayer
-	mkdir -p $(DESTDIR)$(MAN)/man1
-	sed "s/VERSION/$(VERSION)/g" < next-prayer.1 > $(DESTDIR)$(MAN)/man1/next-prayer.1
-	chmod 644 $(DESTDIR)$(MAN)/man1/next-prayer.1
+# ANSI colors for shell output
+BLACK=\033[0;30m
+RED=\033[0;31m
+GREEN=\033[0;32m
+YELLOW=\033[0;33m
+BLUE=\033[0;34m
+PURPLE=\033[0;35m
+CYAN=\033[0;36m
+WHITE=\033[0;37m
+NC=\033[0m # No Color
+
+# ANSI colors for shell output (bold)
+BBLACK=\033[1;30m
+BRED=\033[1;31m
+BGREEN=\033[1;32m
+BYELLOW=\033[1;33m
+BBLUE=\033[1;34m
+BPURPLE=\033[1;35m
+BCYAN=\033[1;36m
+BWHITE=\033[1;37m
+
+np_main: $(SRC)
+	@printf "%b" "$(YELLOW)Compiling the source code...$(WHITE)\n"
+	sed -i "s|IAMUName|$(HOME)|" src/np_main.cpp
+	$(CC) $(CFLAGS) -o np_main $(SRC)
+	sed -i "s|$(HOME)|IAMUName|" src/np_main.cpp
+	@printf "%b" "$(BGREEN)Compilation Done!$(NC)\n\n"
+
+install: np_main
+	@printf "%b" "$(PURPLE)Fetching API Data...$(WHITE)\n"
+	python3 src/np_fetch.py
+	cp -u src/np_fetch.py $(LOCAL_PREFIX)/bin/
+	cp -u np_main $(LOCAL_PREFIX)/bin/
+	cp -u src/next-prayer $(LOCAL_PREFIX)/bin/
+	mkdir -p $(LOCAL_PREFIX)/share/man/man1/
+	sed "s/VERSION/$(VERSION)/" src/next-prayer.1 > $(LOCAL_PREFIX)/share/man/man1/next-prayer.1
+	@printf "%b" "$(BCYAN)next-prayer$(BGREEN) Installed Successfully!$(NC)\n"
 
 uninstall:
-	rm -f $(DESTDIR)$(LPREFIX)/bin/next-prayer
-	rm -f $(DESTDIR)$(LPREFIX)/bin/local_api
-	rm -f $(DESTDIR)$(LPREFIX)/bin/remote_api.py
-	rm -f $(DESTDIR)$(MAN)/man1/next-prayer.1
-	rm -rf $(DESTDIR)$(LPREFIX)/share/next-prayer
+	@printf "%b" "$(BYELLOW)Uninstalling...$(WHITE)\n"
+	rm -rf $(LOCAL_PREFIX)/share/next-prayer
+	rm -f $(LOCAL_PREFIX)/share/man/man1/next-prayer.1
+	rm -f $(LOCAL_PREFIX)/bin/next-prayer
+	rm -f $(LOCAL_PREFIX)/bin/np_main
+	rm -f $(LOCAL_PREFIX)/bin/np_fetch.py
+	rm -f $(LOCAL_PREFIX)/bin/np_config.py
+	@printf "%b" "$(BCYAN)next-prayer$(BGREEN) uninstalled.$(NC)\n\n"
 
 clean:
-	rm -f local_api
+	@printf "%b" "$(YELLOW)Cleaning...$(WHITE)\n"
+	rm -f np_main
+	@printf "%b" "$(BGREEN)Cleaning done.$(NC)\n\n"
 
 .PHONY: all clean install uninstall

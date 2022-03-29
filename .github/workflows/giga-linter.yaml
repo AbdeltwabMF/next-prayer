@@ -1,0 +1,22 @@
+---
+name: lint codebase
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint_code:
+    runs-on: ubuntu-latest
+    steps:
+      # Use the dash only on the first line
+      - uses: actions/checkout@v3
+        with:
+          # Full git history is needed to get a proper list of changed
+          # files within `super-linter`
+          fetch-depth: 0
+      - uses: github/super-linter@v4
+        env:
+          VALIDATE_ALL_CODEBASE: true
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

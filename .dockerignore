@@ -1,0 +1,11 @@
+assets
+CHANGELOG.md
+CPPLINT.cfg
+.git
+.github
+.gitignore
+.mypy_cache
+np_main
+PKGBUILD
+*__pycache__*
+RELEASE_NOTES
