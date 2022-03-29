@@ -242,7 +242,7 @@ int main(int argc, char **argv) {
   // Read args from command line
   if (argc == 2) {
     if (strcmp(argv[1], "--help") == 0) {
-      cout << MAGENTA << "Usage: " << BOLD_MAGENTA << argv[0] << RESET
+      cout << MAGENTA << "Usage: " << BOLD_MAGENTA << "next-prayer" << RESET
            << MAGENTA << " [--help] [--version] [--options...]\n\n";
       cout << BOLD_YELLOW << "Options:\n" << BOLD_WHITE;
       cout << "  --help\t\tShow this help message and exit.\n";
@@ -257,7 +257,7 @@ int main(int argc, char **argv) {
       cout << "  --hybrid\t\tThe elapsed time since the previous prayer as";
       cout << " far as the elapsed time <= THRESHOLD.\n\n" << RESET;
       cout << YELLOW
-           << "This is not the full help, use (man next_prayer) for the";
+           << "This is not the full help, use (man next-prayer) for the";
       cout << " manual.\n" << RESET;
       return 0;
     } else if (strcmp(argv[1], "--version") == 0) {
