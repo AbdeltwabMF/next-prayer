@@ -39,3 +39,4 @@ np_main
 *.pyc
 *.pyo
 .mypy_cache
+cid.sh
