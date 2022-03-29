@@ -1,4 +1,5 @@
-<h1 align="center">Next Prayer</h1>
+<h1 align="center" color="Magenta">Next Prayer</h1>
+
 <h4 align="center"> <em>Islamic prayers reminder for your status bar.</em> </h4>
 
 [![GitHub Super-Linter](https://github.com/abdeltwabmf/continuous-id/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
@@ -10,13 +11,13 @@
 [![GitHub release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)](https://github.com/AbdeltwabMF/next-prayer/releases/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-# Demo
-![live demo](./assets/usage.GIF)
+# Screenshot
+![demo](./assets/usage.png)
 
 # Usage
 
 ```bash
-Usage: next_prayer [options...]
+Usage: next-prayer [options...]
 
 Options:
  --next      The next prayer and its time.
@@ -45,9 +46,9 @@ cd next-prayer
 make clean install
 ```
 
-For `windows users or Docker` version
+For `windows or mac users` use Docker version
 
-- Pull the image from [Docker Hub](https://hub.docker.com/repository/docker/abdeltwabmf/next-prayer), and run the following command:
+- Pull the image from [Docker Hub](https://hub.docker.com/r/abdeltwabmf/next-prayer), and run the following command:
 ```bash
 docker pull abdeltwabmf/next-prayer:latest
 ```
@@ -58,7 +59,8 @@ docker container run --rm  abdeltwabmf/next-prayer np_main --version
 ```
 `Version: v2.0.0`
 
-- Or build it yourself
+- Or build it yourself by running the following commands:
+_preferred for custom configuration_
 ```bash
 git clone https://github.com/abdeltwabmf/next-prayer.git
 cd next-prayer
