@@ -8,7 +8,7 @@
 [![Linux](https://svgshare.com/i/Zhy.svg)](https://svgshare.com/i/Zhy.svg)
 [![Docker](https://badgen.net/badge/icon/docker?icon=docker&label)](https://https://docker.com/)
 [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
-[![GitHub release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)](https://github.com/AbdeltwabMF/next-prayer/releases/)
+[![GitHub release](https://img.shields.io/github/release/AbdeltwabMF/next-prayer.svg)](https://github.com/AbdeltwabMF/next-prayer/releases/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 # Screenshot
@@ -20,16 +20,16 @@
 Usage: next-prayer [options...]
 
 Options:
- --next      The next prayer and its time.
- --prev      The previous prayer and its time.
- --hybrid    The elapsed time since the previous prayer as far as the elapsed time <= THRESHOLD.
- --all       Show all timings.
- --left      The time left till the next prayer.
- --elapsed   The time elapsed since the previous prayer.
- --adhan     Whether the current time is adhan or not.
- --hijri     The current hijri date.
- --help      Display this help message.
- --version   Display the version.
+  --help       Show this help message and exit.
+  --version    Show version information and exit.
+  --next       Show next prayer time.
+  --all        Show all timings.
+  --prev       Show previous prayer time.
+  --left       Show time left to next prayer.
+  --elapsed    Show elapsed time since last prayer.
+  --adhan      Show if adhan is now playing.
+  --hijri      Show hijri date.
+  --hybrid     The elapsed time since the previous prayer as far as the elapsed time <= THRESHOLD.
 ```
 
 # Installation
