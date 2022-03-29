@@ -60,6 +60,7 @@ docker container run --rm  abdeltwabmf/next-prayer np_main --version
 `Version: v2.0.0`
 
 - Or build it yourself by running the following commands:
+
 _preferred for custom configuration_
 ```bash
 git clone https://github.com/abdeltwabmf/next-prayer.git
