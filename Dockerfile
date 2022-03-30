@@ -10,9 +10,9 @@ RUN apk add --update --no-cache \
     pip3 install --no-cache-dir 'requests==v2.27.1'
 
 WORKDIR /app
-COPY . .
-RUN make clean install
 
-RUN cp /root/.local/bin/* /usr/bin/
+COPY . .
+
+RUN make clean install && cp /root/.local/bin/* /usr/bin/
 
 CMD ["next-prayer", "--hybrid"]
