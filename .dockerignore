@@ -1,11 +1,13 @@
-assets
 CHANGELOG.md
-CPPLINT.cfg
+cid.sh
+.dockerignore
 .git
 .github
 .gitignore
-.mypy_cache
+LICENSE
 np_main
 PKGBUILD
-*__pycache__*
+README.md
 RELEASE_NOTES
+usage.png
+__pycache__

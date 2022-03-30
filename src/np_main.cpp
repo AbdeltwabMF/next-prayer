@@ -84,7 +84,7 @@ const char BOLD_CYAN[] = "\033[1;36m";
 const char BOLD_WHITE[] = "\033[1;37m";
 
 const int TEN = 10;
-const char VERSION[] = "v2.0.0";
+const char VERSION[] = "v2.0.2";
 
 void File(const char *fread) { freopen(fread, "r", stdin); }
 

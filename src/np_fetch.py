@@ -1,4 +1,4 @@
-#!/bin/python3
+#!/usr/bin/python3
 """
  - Check for Bin, Config and Data dirs and np_config.py file
     - Ensure that the config file exists
@@ -30,6 +30,7 @@ BLUE = "\033[1;34m"
 PURPLE = "\033[1;35m"
 CYAN = "\033[1;36m"
 WHITE = "\033[1;37m"
+NC = "\033[0m"
 
 
 def check_dirs():
@@ -37,17 +38,17 @@ def check_dirs():
     Check if the directories exist, and create them if they don't.
     """
     try:
-        print(f"{BLUE}Checking directories{WHITE}")
+        print(f"{BLUE}Checking directories{NC}")
         if not os.path.exists(CONF_DIR):
             os.makedirs(CONF_DIR, exist_ok=True)
         if not os.path.exists(DATA_DIR):
             os.makedirs(DATA_DIR, exist_ok=True)
         if not os.path.exists(BIN_DIR):
             os.makedirs(BIN_DIR, exist_ok=True)
-        print(f"{GREEN}Directories checked{WHITE}\n")
+        print(f"{GREEN}Directories checked{NC}\n")
     except (OSError) as ex:
-        print(f"{RED}Could not check directories{WHITE}")
-        print("{YELLOW}Please check you have permissions!")
+        print(f"{RED}Could not check directories{NC}")
+        print("{YELLOW}Please check you have permissions!{NC}")
         print(ex)
         sys.exit(1)
 
@@ -62,17 +63,18 @@ def check_files():
         if os.path.exists(CONF_DIR + "np_config.py"):
             pass
         elif os.path.exists(BIN_DIR + "np_config.py"):
-            os.symlink(BIN_DIR + "np_config.py", CONF_DIR + "np_config.py")
+            os.system(f"cp -f {BIN_DIR}np_config.py {CONF_DIR}")
+            os.symlink(CONF_DIR + "np_config.py", BIN_DIR + "np_config.py")
         elif current_working_dir != BIN_DIR and os.path.exists("src/np_config.py"):
-            os.system(f"cp -u src/np_config.py {BIN_DIR}")
-            os.symlink(BIN_DIR + "np_config.py", CONF_DIR + "np_config.py")
+            os.system(f"cp -f src/np_config.py {CONF_DIR}")
+            os.symlink(CONF_DIR + "np_config.py", BIN_DIR + "np_config.py")
         else:
-            print(f"{RED}Could not find config file{WHITE}\n")
+            print(f"{RED}Could not find config file{NC}\n")
             sys.exit(1)
-        print(f"{GREEN}Config file checked{WHITE}\n")
+        print(f"{GREEN}Config file checked{NC}\n")
     except (OSError) as ex:
-        print(f"{RED}Could not check config file{WHITE}")
-        print("{YELLOW}Please check you have permissions!")
+        print(f"{RED}Could not check config file{NC}")
+        print(f"{YELLOW}Please check you have permissions!{NC}")
         print(ex)
         sys.exit(1)
 
@@ -117,16 +119,16 @@ def fetch_data():
     Fetch the data from the API and save it locally.
     """
     try:
-        print(f"{BLUE}Fetching data{WHITE}")
+        print(f"{BLUE}Fetching data{NC}")
         response = get(get_url())
         if response.status_code == 200:
             write_data(response.json())
-            print(f"{GREEN}Data fetched{WHITE}\n")
+            print(f"{GREEN}Data fetched{NC}\n")
         else:
-            print(f"{RED}Could not fetch data{WHITE}\n")
+            print(f"{RED}Could not fetch data{NC}\n")
             sys.exit(1)
     except (ConnectionError, HTTPError, URLRequired, ConnectTimeout, ReadTimeout) as ex:
-        print(f"{RED}Could not fetch data{WHITE}\n")
+        print(f"{RED}Could not fetch data{NC}\n")
         print(ex)
         sys.exit(1)
 
