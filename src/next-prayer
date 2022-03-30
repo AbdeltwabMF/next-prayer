@@ -3,7 +3,11 @@
 # Redirect to cpp file
 np_main "$1"
 if [[ "$1" = "--hijri" ]]; then
-	exit
+	exit 0
+fi
+
+if [[ "$(np_main --adhan)" = "True" ]]; then
+	notify-send "Next Prayer" "Adhan time for $(np_main --next | awk '{print $1}') prayer"
 fi
 
 # Notify on click
