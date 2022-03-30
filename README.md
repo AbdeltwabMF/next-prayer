@@ -11,8 +11,6 @@
 [![GitHub release](https://img.shields.io/github/release/AbdeltwabMF/next-prayer.svg)](https://github.com/AbdeltwabMF/next-prayer/releases/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-# Screenshot
-![demo](usage.png)
 
 # Usage
 
