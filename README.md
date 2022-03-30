@@ -2,14 +2,13 @@
 
 <h4 align="center"> <em>Islamic prayers reminder for your status bar.</em> </h4>
 
-[![GitHub Super-Linter](https://github.com/abdeltwabmf/continuous-id/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/AbdeltwabMF/next-prayer/graphs/commit-activity)
-![Maintainer](https://img.shields.io/badge/maintainer-Abdeltwabmf-blue)
-[![Linux](https://svgshare.com/i/Zhy.svg)](https://svgshare.com/i/Zhy.svg)
+[![Linux](https://img.shields.io/badge/Platform-Linux-2e8b57?logo=linux&.svg)](https://github.com/AbdeltwabMF/next-prayer#installation=)
 [![Docker](https://badgen.net/badge/icon/docker?icon=docker&label)](https://https://docker.com/)
-[![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
-[![GitHub release](https://img.shields.io/github/release/AbdeltwabMF/next-prayer.svg)](https://github.com/AbdeltwabMF/next-prayer/releases/)
+[![COPYING](https://img.shields.io/github/license/AbdeltwabMF/next-prayer?logo=gnu&.svg)](https://github.com/AbdeltwabMF/next-prayer/blob/main/LICENSE)
+[![contributors](https://img.shields.io/github/contributors/AbdeltwabMF/next-prayer.svg)](https://github.com/AbdeltwabMF/next-prayer/graphs/contributors)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![GitHub release](https://img.shields.io/github/release/AbdeltwabMF/next-prayer.svg)](https://github.com/AbdeltwabMF/next-prayer/releases/)
+[![GitHub Super-Linter](https://github.com/abdeltwabmf/continuous-id/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
 
 
 # Usage
