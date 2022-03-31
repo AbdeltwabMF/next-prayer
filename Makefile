@@ -36,17 +36,17 @@ BCYAN := \033[1;36m
 BWHITE := \033[1;37m
 
 all: $(BIN)
+	cp -u $(BIN) $(LOCAL_PREFIX)/bin/
+	@printf "%b" "$(BGREEN)Compilation Done!$(NC)\n\n"
 
 $(BIN): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(BIN)
-	cp -u $(BIN) $(LOCAL_PREFIX)/bin/
-	sed -i "s|$(HOME)|IAMUName|" src/np_main.cpp
-	@printf "%b" "$(BGREEN)Compilation Done!$(NC)\n\n"
 
 $(OBJ): $(SRC)
 	@printf "%b" "$(YELLOW)Compiling the source code...$(WHITE)\n"
 	sed -i "s|IAMUName|$(HOME)|" src/np_main.cpp
 	$(CC) $(CFLAGS) -c $(SRC)
+	sed -i "s|$(HOME)|IAMUName|" src/np_main.cpp
 
 install:
 	@printf "%b" "$(PURPLE)Fetching API Data...$(WHITE)\n"
