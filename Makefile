@@ -36,11 +36,12 @@ BCYAN := \033[1;36m
 BWHITE := \033[1;37m
 
 all: $(BIN)
+	mkdir -p $(LOCAL_PREFIX)/bin
 	cp -u $(BIN) $(LOCAL_PREFIX)/bin/
-	@printf "%b" "$(BGREEN)Compilation Done!$(NC)\n\n"
 
 $(BIN): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(BIN)
+	@printf "%b" "$(BGREEN)Compilation Done!$(NC)\n\n"
 
 $(OBJ): $(SRC)
 	@printf "%b" "$(YELLOW)Compiling the source code...$(WHITE)\n"

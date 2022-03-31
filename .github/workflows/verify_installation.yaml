@@ -18,3 +18,11 @@ jobs:
           gcc --version
           make all clean install
           next-prayer --version
+          next-prayer --help
+          next-prayer --all
+          next-prayer --prev
+          next-prayer --next
+          next-prayer --elapsed
+          next-prayer --left
+          next-prayer --hijri
+          next-prayer --adhan
