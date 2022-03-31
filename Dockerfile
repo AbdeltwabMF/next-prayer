@@ -13,6 +13,6 @@ WORKDIR /app
 
 COPY . .
 
-RUN make clean install && cp /root/.local/bin/* /usr/bin/
+RUN make all clean install && cp /root/.local/bin/* /usr/bin/
 
 CMD ["next-prayer", "--hybrid"]

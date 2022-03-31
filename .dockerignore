@@ -4,6 +4,8 @@ cid.sh
 .git
 .github
 .gitignore
+.gitmodules
+AUR
 LICENSE
 np_main
 PKGBUILD
