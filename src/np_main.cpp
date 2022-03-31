@@ -10,6 +10,7 @@
 #include <iostream>
 #include <set>
 #include <string>
+#include <unordered_map>
 #include <utility>
 
 #if __cplusplus >= 201402L
@@ -34,33 +35,7 @@ using ::std::pair;
 using ::std::string;
 using ::std::tie;
 using ::std::to_string;
-
-template <class T, typename Comp = less<T>>
-using indexed_set =
-    tree<T, null_type, Comp, rb_tree_tag, tree_order_statistics_node_update>;
-
-void Fast() {
-  ios_base::sync_with_stdio(false);
-  cin.tie(nullptr);
-}
-
-ostream &operator<<(ostream &os, const pair<string, string> &p) {
-  os << p.first << " " << p.second;
-  return os;
-}
-
-// clang-format off
-class Compare {
- public:
-  bool operator()(const pair<string, string> &lhs,
-                  const pair<string, string> &rhs) const {
-    if (lhs.second != rhs.second)
-      return lhs.second < rhs.second;
-    else
-      return lhs.first < rhs.first;
-  }
-};
-// clang-format on
+using ::std::unordered_map;
 
 // ANSI color for terminal output
 /* const char BLACK[] = "\033[30m"; */
@@ -86,10 +61,42 @@ const char BOLD_WHITE[] = "\033[1;37m";
 const int TEN = 10;
 const char VERSION[] = "v2.0.2";
 
+template <class T, typename Comp = less<T>>
+using indexed_set =
+    tree<T, null_type, Comp, rb_tree_tag, tree_order_statistics_node_update>;
+
 void File(const char *fread) { freopen(fread, "r", stdin); }
+
+// clang-format off
+class Compare {
+ public:
+  bool operator()(const pair<string, string> &lhs,
+                  const pair<string, string> &rhs) const {
+    if (lhs.second != rhs.second)
+      return lhs.second < rhs.second;
+    else
+      return lhs.first < rhs.first;
+  }
+};
+// clang-format on
 
 indexed_set<pair<string, string>, Compare> mawaqeet;
 pair<string, string> cur, _next, _prev;
+
+unordered_map<string, int> args{
+    {"--help", 0}, {"--version", 1}, {"--hybrid", 2}, {"--next", 3},
+    {"--prev", 4},    {"--all", 5},  {"--hijri", 6},  {"--left", 7},
+    {"--elapsed", 8}, {"--adhan", 9}};
+
+void Fast() {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+}
+
+ostream &operator<<(ostream &os, const pair<string, string> &p) {
+  os << p.first << " " << p.second;
+  return os;
+}
 
 int CurrPrayer(pair<string, string> cur) {
   /* return number of items in the set that are strictly smaller than cur */
@@ -106,12 +113,35 @@ pair<string, string> PrevPrayer(pair<string, string> cur) {
   return *mawaqeet.find_by_order((CurrPrayer(cur) - 1 + sz) % sz);
 }
 
-string AdhanNow(pair<string, string> cur, pair<string, string> _next) {
+// clang-format off
+template <typename... Args> void OutLine(Args... args) {
+  ((cout << args), ...);
+  cout << "\n";
+}
+// clang-format on
+
+string AdhanPlaying(pair<string, string> cur, pair<string, string> _next) {
   return (cur.second == _next.second ? "True" : "False");
 }
 
-string FetchNext(pair<string, string> cur) {
-  return (cur.second == "00:00" ? "True" : "False");
+void HelpMessage() {
+  cout << MAGENTA << "Usage: " << BOLD_MAGENTA << "next-prayer" << RESET
+       << MAGENTA << " [--help] [--version] [--options...]\n\n"
+       << BOLD_YELLOW << "Options:\n"
+       << BOLD_WHITE << "  --help\t\tShow this help message and exit.\n"
+       << "  --version\t\tShow version information and exit.\n"
+       << "  --next\t\tShow next prayer time.\n"
+       << "  --all\t\t\tShow all timings.\n"
+       << "  --prev\t\tShow previous prayer time.\n"
+       << "  --left\t\tShow time left to next prayer.\n"
+       << "  --elapsed\t\tShow elapsed time since last prayer.\n"
+       << "  --adhan\t\tShow if adhan is now playing.\n"
+       << "  --hijri\t\tShow hijri date.\n"
+       << "  --hybrid\t\tThe elapsed time since the previous prayer as"
+       << " far as the elapsed time <= THRESHOLD.\n\n"
+       << YELLOW << "This is not the full help, use (man next-prayer) for the"
+       << " manual.\n"
+       << RESET;
 }
 
 pair<int, int> ConverStrToPairInt(const string &x) {
@@ -148,6 +178,10 @@ string GetTimeDifference(string lhs, string rhs) {
   return ret;
 }
 
+string ElapsedTime() { return GetTimeDifference(_prev.second, cur.second); }
+
+string TimeLeft() { return GetTimeDifference(cur.second, _next.second); }
+
 pair<string, string> Make12(const string &x) {
   assert(static_cast<int>(x.size()) == 5);
   if (x <= "11:59")
@@ -160,7 +194,7 @@ pair<string, string> Make12(const string &x) {
 
 struct tm *localtime_r(const time_t *timep, struct tm *result);
 
-const string GetCurrentTimeDate() {
+const string GetCurrentDate() {
   char buf[80];
   const time_t now = time(0);
   struct tm tstruct;
@@ -170,7 +204,18 @@ const string GetCurrentTimeDate() {
   return buf;
 }
 
-string GetHijriDate(string lang) {
+string HybridModeOutPut(const string &elapsed_time) {
+  string ret = "";
+  if (elapsed_time <= "00:30") {
+    ret = elapsed_time + " since " + _prev.first;
+  } else {
+    pair<string, string> pair12 = Make12(_next.second);
+    ret = _next.first + " " + pair12.first + " " + pair12.second;
+  }
+  return ret;
+}
+
+string HijriDate(string lang) {
   string day, month_ar, month_en, year;
   cin.ignore();
   getline(cin, day);
@@ -179,14 +224,14 @@ string GetHijriDate(string lang) {
   getline(cin, year);
 
   if (lang == "ar")
-    return day + "-" + month_ar + "-" + year;
+    return day + " " + month_ar + " " + year;
   else
-    return day + "-" + month_en + "-" + year;
+    return day + " " + month_en + " " + year;
 }
 
-void PrintAll() {
+void AllTimings() {
   cout << BOLD_CYAN << "Prayer:\t\t" << BOLD_MAGENTA << "Time:\n" << RESET;
-  cout << BOLD_CYAN << "-------\t\t" << BOLD_MAGENTA << "-----\n" << RESET;
+  cout << BOLD_CYAN << "-------\t\t" << BOLD_MAGENTA << "--------\n" << RESET;
 
   for (auto it = mawaqeet.begin(); it != mawaqeet.end(); ++it) {
     if (it->first == "A")
@@ -201,12 +246,9 @@ void PrintAll() {
 void ReadData() {
   string _salat, _time;
   if (!(cin >> _salat >> _time)) {
-    system("np_fetch.py");
-    if (!(cin >> _salat >> _time)) {
-      cout << BOLD_RED << "Unable to read data\n" << RESET;
-      cout << YELLOW << "Run \"make clean install\" first!\n" << RESET;
-      exit(1);
-    }
+    cout << BOLD_RED << "Unable to read data\n" << RESET;
+    cout << YELLOW << "Run \"make all clean install\" first!\n" << RESET;
+    exit(1);
   }
 
   mawaqeet.insert(make_pair(_salat, _time));
@@ -214,83 +256,64 @@ void ReadData() {
     cin >> _salat >> _time;
     mawaqeet.insert(make_pair(_salat, _time));
   }
+
+  cur = make_pair("A", GetCurrentDate().substr(0, 5));
+  mawaqeet.insert(cur);
 }
 
 int main(int argc, char **argv) {
   Fast();
-  File(("IAMUName/.local/share/next-prayer/" + GetCurrentTimeDate().substr(6) +
+  File(("IAMUName/.local/share/next-prayer/" + GetCurrentDate().substr(6) +
         ".txt")
            .c_str());
 
   ReadData();
-  cur = make_pair("A", GetCurrentTimeDate().substr(0, 5));
-  mawaqeet.insert(cur);
-  string hijri = GetHijriDate("ar");
 
   _next = NextPrayer(cur);
   _prev = PrevPrayer(cur);
 
-  string next_prayer = _next.first + " " + Make12(_next.second).first + " " +
-                       Make12(_next.second).second;
-  string prev_prayer = _prev.first + " " + Make12(_prev.second).first + " " +
-                       Make12(_prev.second).second;
-  string time_left = GetTimeDifference(cur.second, _next.second);
-  string elapsed_time = GetTimeDifference(_prev.second, cur.second);
-  string is_adhan = AdhanNow(cur, _next);
-  string is_newday = FetchNext(cur);
-
   // Read args from command line
-  if (argc == 2) {
-    if (strcmp(argv[1], "--help") == 0) {
-      cout << MAGENTA << "Usage: " << BOLD_MAGENTA << "next-prayer" << RESET
-           << MAGENTA << " [--help] [--version] [--options...]\n\n";
-      cout << BOLD_YELLOW << "Options:\n" << BOLD_WHITE;
-      cout << "  --help\t\tShow this help message and exit.\n";
-      cout << "  --version\t\tShow version information and exit.\n";
-      cout << "  --next\t\tShow next prayer time.\n";
-      cout << "  --all\t\t\tShow all timings.\n";
-      cout << "  --prev\t\tShow previous prayer time.\n";
-      cout << "  --left\t\tShow time left to next prayer.\n";
-      cout << "  --elapsed\t\tShow elapsed time since last prayer.\n";
-      cout << "  --adhan\t\tShow if adhan is now playing.\n";
-      cout << "  --hijri\t\tShow hijri date.\n";
-      cout << "  --hybrid\t\tThe elapsed time since the previous prayer as";
-      cout << " far as the elapsed time <= THRESHOLD.\n\n" << RESET;
-      cout << YELLOW
-           << "This is not the full help, use (man next-prayer) for the";
-      cout << " manual.\n" << RESET;
-      return 0;
-    } else if (strcmp(argv[1], "--version") == 0) {
-      cout << "Version: " << BOLD_GREEN << VERSION << "\n" << RESET;
-      return 0;
-    } else if (strcmp(argv[1], "--hybrid") == 0) {
-      if (elapsed_time <= "00:30") {
-        cout << elapsed_time << " since " << _prev.first << "\n";
-      } else {
-        cout << _next.first << " " << Make12(_next.second) << "\n";
-      }
-      return 0;
-    } else if (strcmp(argv[1], "--next") == 0) {
-      cout << _next.first << " " << Make12(_next.second) << "\n";
-      return 0;
-    } else if (strcmp(argv[1], "--prev") == 0) {
-      cout << _prev.first << " " << Make12(_prev.second) << "\n";
-      return 0;
-    } else if (strcmp(argv[1], "--all") == 0) {
-      PrintAll();
-      return 0;
-    } else if (strcmp(argv[1], "--elapsed") == 0) {
-      cout << elapsed_time << " since " << _prev.first << "\n";
-      return 0;
-    } else if (strcmp(argv[1], "--left") == 0) {
-      cout << time_left << " until " << _next.first << "\n";
-      return 0;
-    } else if (strcmp(argv[1], "--adhan") == 0) {
-      cout << is_adhan << "\n";
-      return 0;
-    } else if (strcmp(argv[1], "--hijri") == 0) {
-      cout << hijri << "\n";
-      return 0;
+  switch (argc) {
+  case 2:
+    switch (args[argv[1]]) {
+    case 0:
+      HelpMessage();
+      break;
+    case 1:
+      OutLine("Version: ", BOLD_GREEN, VERSION, RESET);
+      break;
+    case 2:
+      OutLine(HybridModeOutPut(ElapsedTime()));
+      break;
+    case 3:
+      OutLine(_next.first, " ", Make12(_next.second));
+      break;
+    case 4:
+      OutLine(_prev.first, " ", Make12(_prev.second));
+      break;
+    case 5:
+      AllTimings();
+      break;
+    case 6:
+      OutLine(HijriDate("ar"));
+      break;
+    case 7:
+      OutLine(ElapsedTime(), " until ", _next.first);
+      break;
+    case 8:
+      OutLine(TimeLeft(), " since ", _prev.first);
+      break;
+    case 9:
+      OutLine(AdhanPlaying(cur, _next));
+      break;
+    default:
+      HelpMessage();
+      break;
     }
+    break;
+  default:
+    HelpMessage();
+    break;
   }
+  return 0;
 }

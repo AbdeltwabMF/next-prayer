@@ -1,0 +1,3 @@
+[submodule "AUR"]
+	path = AUR
+	url = ssh://aur@aur.archlinux.org/next-prayer.git

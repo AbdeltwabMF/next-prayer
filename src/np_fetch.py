@@ -8,8 +8,8 @@
 import os
 import sys
 
-from np_config import get_api_params
 from requests import ConnectTimeout, HTTPError, ReadTimeout, URLRequired, get
+from np_config import get_api_params
 
 HOME = os.path.expanduser("~")
 LOCAL_PREFIX = HOME + "/.local/"
@@ -58,24 +58,19 @@ def check_files():
     Check if the np_config.py file exist, and raise an error if it doesn't.
     """
     try:
-        current_working_dir = os.getcwd() + "/"
+        cfg = "np_config.py"
         print(f"{BLUE}Checking config file{WHITE}")
-        if os.path.exists(CONF_DIR + "np_config.py"):
-            pass
-        elif os.path.exists(BIN_DIR + "np_config.py"):
-            os.system(f"cp -f {BIN_DIR}np_config.py {CONF_DIR}")
-            os.symlink(CONF_DIR + "np_config.py", BIN_DIR + "np_config.py")
-        elif current_working_dir != BIN_DIR and os.path.exists("src/np_config.py"):
-            os.system(f"cp -f src/np_config.py {CONF_DIR}")
-            os.symlink(CONF_DIR + "np_config.py", BIN_DIR + "np_config.py")
+        if os.path.exists(CONF_DIR + cfg):
+            if not os.path.exists(BIN_DIR + cfg):
+                os.symlink(CONF_DIR + cfg, BIN_DIR + cfg)
         else:
-            print(f"{RED}Could not find config file{NC}\n")
-            sys.exit(1)
+            os.system(f"cp -f src/{cfg} {CONF_DIR}")
+            os.symlink(CONF_DIR + cfg, BIN_DIR + cfg)
         print(f"{GREEN}Config file checked{NC}\n")
     except (OSError) as ex:
         print(f"{RED}Could not check config file{NC}")
         print(f"{YELLOW}Please check you have permissions!{NC}")
-        print(ex)
+        print(f"{WHITE}{ex}{NC}")
         sys.exit(1)
 
 
