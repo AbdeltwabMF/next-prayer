@@ -8,7 +8,7 @@ SRC = src/*.cpp
 HDR = src/*.h
 
 CC = g++
-CFLAGS = -Wall -Wextra -Werror -std=c++20 -pedantic -O3 -DNDEBUG
+CFLAGS = -Wall -Wextra -std=c++2a -pedantic -O3 -DNDEBUG
 
 LOCAL_PREFIX = $(HOME)/.local
 CONFIG_PREFIX = $(HOME)/.config
