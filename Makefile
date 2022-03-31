@@ -9,7 +9,7 @@ OBJ := *.o
 BIN := np_main
 
 CC := g++
-CFLAGS := -Wall -Wextra -std=c++2a -pedantic -O3
+CFLAGS := -std=c++2a -pedantic -O3
 
 LOCAL_PREFIX := $(HOME)/.local
 CONFIG_PREFIX := $(HOME)/.config
