@@ -2,8 +2,9 @@
 name: lint codebase
 
 on:
-  push:
   pull_request:
+    branches:
+      - main
 
 jobs:
   lint_code:
