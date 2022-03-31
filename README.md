@@ -44,7 +44,7 @@ yay -S next-prayer
 ```bash
 git clone https://github.com/abdeltwabmf/next-prayer.git
 cd next-prayer
-make clean install
+make all clean install
 ```
 
 - For `Windows or Mac` you probably end up with `Docker version`: <br>

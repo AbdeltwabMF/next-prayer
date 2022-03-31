@@ -8,8 +8,8 @@
 import os
 import sys
 
-from requests import ConnectTimeout, HTTPError, ReadTimeout, URLRequired, get
 from np_config import get_api_params
+from requests import ConnectTimeout, HTTPError, ReadTimeout, URLRequired, get
 
 HOME = os.path.expanduser("~")
 LOCAL_PREFIX = HOME + "/.local/"

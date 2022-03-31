@@ -84,8 +84,8 @@ indexed_set<pair<string, string>, Compare> mawaqeet;
 pair<string, string> cur, _next, _prev;
 
 unordered_map<string, int> args{
-    {"--help", 0}, {"--version", 1}, {"--hybrid", 2}, {"--next", 3},
-    {"--prev", 4},    {"--all", 5},  {"--hijri", 6},  {"--left", 7},
+    {"--help", 0},    {"--version", 1}, {"--hybrid", 2}, {"--next", 3},
+    {"--prev", 4},    {"--all", 5},     {"--hijri", 6},  {"--left", 7},
     {"--elapsed", 8}, {"--adhan", 9}};
 
 void Fast() {
