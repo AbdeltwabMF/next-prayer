@@ -298,10 +298,10 @@ int main(int argc, char **argv) {
       OutLine(HijriDate("ar"));
       break;
     case 7:
-      OutLine(ElapsedTime(), " until ", _next.first);
+      OutLine(TimeLeft(), " until ", _next.first);
       break;
     case 8:
-      OutLine(TimeLeft(), " since ", _prev.first);
+      OutLine(ElapsedTime(), " since ", _prev.first);
       break;
     case 9:
       OutLine(AdhanPlaying(cur, _next));
