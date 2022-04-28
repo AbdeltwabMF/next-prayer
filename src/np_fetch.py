@@ -45,10 +45,10 @@ def check_dirs():
             os.makedirs(DATA_DIR, exist_ok=True)
         if not os.path.exists(BIN_DIR):
             os.makedirs(BIN_DIR, exist_ok=True)
-        print(f"{GREEN}Directories checked{NC}\n")
+        print(f"{GREEN}Directories checked{NC}")
     except (OSError) as ex:
         print(f"{RED}Could not check directories{NC}")
-        print("{YELLOW}Please check you have permissions!{NC}")
+        print(f"{YELLOW}Please check you have permissions!{NC}")
         print(ex)
         sys.exit(1)
 
@@ -66,7 +66,7 @@ def check_files():
         else:
             os.system(f"cp -f src/{cfg} {CONF_DIR}")
             os.symlink(CONF_DIR + cfg, BIN_DIR + cfg)
-        print(f"{GREEN}Config file checked{NC}\n")
+        print(f"{GREEN}Config file checked{NC}")
     except (OSError) as ex:
         print(f"{RED}Could not check config file{NC}")
         print(f"{YELLOW}Please check you have permissions!{NC}")
@@ -118,12 +118,12 @@ def fetch_data():
         response = get(get_url())
         if response.status_code == 200:
             write_data(response.json())
-            print(f"{GREEN}Data fetched{NC}\n")
+            print(f"{GREEN}Data fetched{NC}")
         else:
-            print(f"{RED}Could not fetch data{NC}\n")
+            print(f"{RED}Could not fetch data{NC}")
             sys.exit(1)
     except (ConnectionError, HTTPError, URLRequired, ConnectTimeout, ReadTimeout) as ex:
-        print(f"{RED}Could not fetch data{NC}\n")
+        print(f"{RED}Could not fetch data{NC}")
         print(ex)
         sys.exit(1)
 

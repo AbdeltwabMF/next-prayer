@@ -36,41 +36,41 @@ BCYAN := \033[1;36m
 BWHITE := \033[1;37m
 
 all: $(BIN)
-	mkdir -p $(LOCAL_PREFIX)/bin
-	cp -u $(BIN) $(LOCAL_PREFIX)/bin/
 
 $(BIN): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(BIN)
-	@printf "%b" "$(BGREEN)Compilation Done!$(NC)\n\n"
+	@printf "%b" "$(GREEN)Compilation Done!$(NC)\n\n"
 
 $(OBJ): $(SRC)
-	@printf "%b" "$(YELLOW)Compiling the source code...$(WHITE)\n"
+	@printf "%b" "$(BYELLOW)Compiling the source code...$(WHITE)\n"
 	sed -i "s|IAMUName|$(HOME)|" src/np_main.cpp
 	$(CC) $(CFLAGS) -c $(SRC)
 	sed -i "s|$(HOME)|IAMUName|" src/np_main.cpp
 
 install:
-	@printf "%b" "$(PURPLE)Fetching API Data...$(WHITE)\n"
+	@printf "%b" "$(BCYAN)Installing next-prayer...$(WHITE)\n"
+	mkdir -p $(DESTDIR)$(LOCAL_PREFIX)/bin
 	python3 src/np_fetch.py
-	cp -u src/np_fetch.py $(LOCAL_PREFIX)/bin/
-	cp -u src/next-prayer $(LOCAL_PREFIX)/bin/
-	mkdir -p $(LOCAL_PREFIX)/share/man/man1/
-	sed "s/VERSION/$(VERSION)/" src/next-prayer.1 > $(LOCAL_PREFIX)/share/man/man1/next-prayer.1
-	@printf "%b" "$(BCYAN)next-prayer$(BGREEN) Installed Successfully!$(NC)\n"
+	cp -u $(BIN) $(DESTDIR)$(LOCAL_PREFIX)/bin/
+	cp -u src/next-prayer $(DESTDIR)$(LOCAL_PREFIX)/bin/
+	cp -u src/np_fetch.py $(DESTDIR)$(LOCAL_PREFIX)/bin/
+	mkdir -p $(DESTDIR)$(LOCAL_PREFIX)/share/man/man1/
+	sed "s/VERSION/$(VERSION)/" src/next-prayer.1 > $(DESTDIR)$(LOCAL_PREFIX)/share/man/man1/next-prayer.1
+	@printf "%b" "$(CYAN)next-prayer$(GREEN) Installed Successfully!$(NC)\n\n"
 
 uninstall:
 	@printf "%b" "$(BYELLOW)Uninstalling next-prayer...$(WHITE)\n"
-	rm -rf $(LOCAL_PREFIX)/share/next-prayer
-	rm -f $(LOCAL_PREFIX)/share/man/man1/next-prayer.1
-	rm -f $(LOCAL_PREFIX)/bin/next-prayer
-	rm -f $(LOCAL_PREFIX)/bin/np_main
-	rm -f $(LOCAL_PREFIX)/bin/np_fetch.py
-	rm -f $(LOCAL_PREFIX)/bin/np_config.py
-	@printf "%b" "$(BCYAN)next-prayer$(GREEN) uninstalled.$(NC)\n"
+	rm -rf $(DESTDIR)$(LOCAL_PREFIX)/share/next-prayer
+	rm -f $(DESTDIR)$(LOCAL_PREFIX)/share/man/man1/next-prayer.1
+	rm -f $(DESTDIR)$(LOCAL_PREFIX)/bin/next-prayer
+	rm -f $(DESTDIR)$(LOCAL_PREFIX)/bin/np_main
+	rm -f $(DESTDIR)$(LOCAL_PREFIX)/bin/np_fetch.py
+	rm -f $(DESTDIR)$(LOCAL_PREFIX)/bin/np_config.py
+	@printf "%b" "$(CYAN)next-prayer$(GREEN) uninstalled.$(NC)\n\n"
 
 clean:
-	@printf "%b" "$(YELLOW)Cleaning...$(WHITE)\n"
+	@printf "%b" "$(BYELLOW)Cleaning...$(WHITE)\n"
 	rm -rf $(OBJ) $(BIN)
-	@printf "%b" "$(GREEN)Cleaning done.$(NC)\n\n"
+	@printf "%b" "$(GREEN)Cleaning done.$(NC)\n"
 
-.PHONY: all clean install uninstall
+.PHONY: all install uninstall clean

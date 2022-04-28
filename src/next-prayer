@@ -11,13 +11,14 @@ if [[ "$(np_main --adhan)" = "True" ]]; then
 fi
 
 # Notify on click
-case "${BLOCK_BUTTON}" in
+case "${BUTTON}" in
 	1)
 		notify-send -t 60000 "Next Prayer" \
-		"$(printf "%s %s %s\n%s %s %s" "$(np_main --left)" "until" "$(np_main --next)" \
+		  "$(printf "%s %s %s\n%s %s %s" "$(np_main --left)" \
+			"until" "$(np_main --next)" \
 			"$(np_main --elapsed)" "since" "$(np_main --prev)" \
 			| awk 'BEGIN { printf "%-8s %-8s %s\n", "Time", "", "Salat";
 			printf "%-8s %-8s %s\n", "-----", "", "-------" }
 			{ printf "%-8s %-8s %s\n", $1, $2, $3 }')"
-				;;
+		;;
 esac

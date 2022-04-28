@@ -16,7 +16,7 @@ jobs:
       - name: Build, Install and Verify
         run: |
           gcc --version
-          make all clean install
+          make all install clean
           next-prayer --version
           next-prayer --help
           next-prayer --all
