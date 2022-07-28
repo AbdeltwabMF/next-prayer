@@ -1,15 +1,50 @@
 <h1 align="center" color="Magenta">Next Prayer</h1>
 
-<h4 align="center"> <em>Islamic prayers reminder for your status bar.</em> </h4>
+<h4 align="center"> <em>Islamic prayers reminder for your *nix status bar.</em> </h4>
 
-[![Linux](https://img.shields.io/badge/Platform-Linux-2e8b57?logo=linux&.svg)](https://github.com/AbdeltwabMF/next-prayer#installation=)
-[![Docker](https://badgen.net/badge/icon/docker?icon=docker&label)](https://https://docker.com/)
-[![COPYING](https://img.shields.io/github/license/AbdeltwabMF/next-prayer?logo=gnu&.svg)](https://github.com/AbdeltwabMF/next-prayer/blob/main/LICENSE)
-[![contributors](https://img.shields.io/github/contributors/AbdeltwabMF/next-prayer.svg)](https://github.com/AbdeltwabMF/next-prayer/graphs/contributors)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-[![GitHub release](https://img.shields.io/github/release/AbdeltwabMF/next-prayer.svg)](https://github.com/AbdeltwabMF/next-prayer/releases/)
-[![GitHub Super-Linter](https://github.com/abdeltwabmf/continuous-id/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
+<div align="center">
+    <a href="https://github.com/AbdeltwabMF/next-prayer/graphs/commit-activity">
+        <img src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" alt="maintenance" />
+    </a>
+    <a href="https://github.com/AbdeltwabMF/next-prayer/blob/main/LICENSE">
+        <img src="https://img.shields.io/github/license/AbdeltwabMF/next-prayer?logo=gnu&.svg" alt="license" />
+    <a>
+    <a href="https://github.com/AbdeltwabMF/next-prayer/releases">
+        <img src="https://img.shields.io/github/release/AbdeltwabMF/next-prayer.svg" alt="release" />
+    </a>
+    <a href="https://github.com/AbdeltwabMF/next-prayer/graphs/contributors">
+        <img src="https://img.shields.io/github/contributors/AbdeltwabMF/next-prayer.svg" alt="contributors" />
+    </a>
+    <a href="http://makeapullrequest.com">
+        <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="pull-request" />
+    </a>
+    <a href="https://hub.docker.com/r/abdeltwabmf/next-prayer">
+        <img src="https://img.shields.io/docker/image-size/abdeltwabmf/next-prayer/latest" alt="docker" />
+    </a>
+    <a href="https://github.com/AbdeltwabMF/next-prayer">
+        <img src="https://img.shields.io/github/languages/top/AbdeltwabMF/next-prayer" alt="languages" />
+    </a>
+    <a href="https://github.com/AbdeltwabMF/next-prayer/CODE-OF-CONDUCT.md">
+        <img src="https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg" alt="code-of-conduct" />
+    </a>
+    <a href="https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AbdeltwabMF/next-prayer&amp;utm_campaign=Badge_Grade">
+        <img src="https://app.codacy.com/project/badge/Grade/7abde45beb1a44ef858fb68e889a214e" alt="quality" />
+    </a>
+    <a href="https://github.com/AbdeltwabMF/next-prayer/graphs/commit-activity">
+        <img src="https://img.shields.io/github/commit-activity/w/abdeltwabmf/next-prayer" alt="commits" />
+    </a>
+    <a href="https://github.com/AbdeltwabMF/next-prayer">
+        <img src="https://img.shields.io/tokei/lines/github/AbdeltwabMF/next-prayer" alt="lines-of-code" />
+    </a>
+    <a href="https://github.com/marketplace/actions/super-linter">
+        <img src="https://github.com/abdeltwabmf/continuous-id/workflows/Lint%20Code%20Base/badge.svg" alt="chat" />
+    </a>
+</div>
 
+<br />
+
+*If you have any improvements, do not hesitate to post an [issue](https://github.com/AbdeltwabMF/next-prayer/issues/new/) or make a [pull request](https://github.com/AbdeltwabMF/next-prayer/pulls).*
+*Your support is very much appreciated!* [star on GitHub](https://github.com/AbdeltwabMF/next-prayer/stargazers)
 
 # Usage
 
@@ -132,7 +167,6 @@ border_left=0
 :eyes: If you're using `the docker version` Add `docker run --rm next-prayer`
 at the very beginning of the command.<br>
 
----
 
 # [License](LICENSE)
 
