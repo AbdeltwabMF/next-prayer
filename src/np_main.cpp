@@ -59,7 +59,7 @@ const char BOLD_CYAN[] = "\033[1;36m";
 const char BOLD_WHITE[] = "\033[1;37m";
 
 const int TEN = 10;
-const char VERSION[] = "v2.0.2";
+const char VERSION[] = "v0.3.0";
 
 template <class T, typename Comp = less<T>>
 using indexed_set =
@@ -230,17 +230,25 @@ string HijriDate(string lang) {
 }
 
 void AllTimings() {
-  cout << BOLD_CYAN << "Prayer:\t\t" << BOLD_MAGENTA << "Time:\n" << RESET;
-  cout << BOLD_CYAN << "-------\t\t" << BOLD_MAGENTA << "--------\n" << RESET;
-
-  for (auto it = mawaqeet.begin(); it != mawaqeet.end(); ++it) {
+  cout << BOLD_CYAN << "┌────────────┬────────────┐\n" << RESET;
+  cout << BOLD_CYAN << "│   Prayer   │    Time    │\n" << RESET;
+  cout << BOLD_CYAN << "├────────────┼────────────┤\n" << RESET;
+  int inx = 0;
+  for (auto it = mawaqeet.begin(); it != mawaqeet.end(); ++it, ++inx) {
     if (it->first == "A")
       continue;
     pair<string, string> cur = Make12(it->second);
-    cout << BOLD_YELLOW << it->first << "\t\t" << BOLD_MAGENTA << cur.first
-         << " " << cur.second << "\n"
-         << RESET;
+    cout << BOLD_CYAN << "│ " << BOLD_YELLOW;
+    cout << it->first;
+    int sz = static_cast<int>(it->first.size());
+    for (int i = 0; i <= 10 - sz; ++i)
+      cout << " ";
+    cout << BOLD_CYAN << "│   " << BOLD_MAGENTA << cur.first
+      << " " << cur.second << BOLD_CYAN << " │\n" << RESET;
+    if(inx < mawaqeet.size() - 2)
+      cout << BOLD_CYAN << "├────────────┼────────────┤\n" << RESET;
   }
+  cout << BOLD_CYAN << "└────────────┴────────────┘\n" << RESET;
 }
 
 void ReadData() {

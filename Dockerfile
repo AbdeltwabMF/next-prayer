@@ -1,18 +1,32 @@
-FROM alpine:3.15.2
+FROM alpine:3.15.2 As builder
 
-RUN apk add --update --no-cache \
-    'bash=5.1.16-r0' \
-    'make=4.3-r0' \
-    'g++=10.3.1_git20211027-r0' \
-    'python3=3.9.7-r4' \
-    'py3-pip=20.3.4-r1' && \
-    pip3 install --no-cache-dir --upgrade 'pip==22.0.4' && \
-    pip3 install --no-cache-dir 'requests==v2.27.1'
+RUN apk add --update --no-cache bash make g++ python3 py3-pip
+RUN pip3 install --no-cache-dir --upgrade pip requests
+
+RUN addgroup --system --gid 1001 nextprayer
+RUN adduser --system --uid 1001 nextprayer
 
 WORKDIR /app
 
 COPY . .
 
-RUN make all install clean && cp /root/.local/bin/* /usr/bin/
+RUN chown -R nextprayer:nextprayer /app
+
+USER nextprayer
+
+RUN make all install clean
+
+FROM alpine:3.15.2 As runner
+
+RUN apk add --update --no-cache python3 bash
+
+RUN addgroup --system --gid 1001 nextprayer
+RUN adduser --system --uid 1001 nextprayer
+
+COPY --from=builder /home/nextprayer/.local/bin/* /usr/bin/
+COPY --from=builder /home/nextprayer/.local/share/next-prayer /home/nextprayer/.local/share/next-prayer
+COPY --from=builder /home/nextprayer/.config/next-prayer/np_config.py /home/nextprayer/.config/next-prayer/np_config.py
+
+USER nextprayer
 
 CMD ["next-prayer", "--hybrid"]
