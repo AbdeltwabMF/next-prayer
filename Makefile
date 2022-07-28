@@ -54,6 +54,10 @@ install:
 	cp -f src/np_fetch.py $(DESTDIR)$(LOCAL_PREFIX)/bin/
 	mkdir -p $(DESTDIR)$(LOCAL_PREFIX)/share/man/man1/
 	sed "s/VERSION/$(VERSION)/" src/next-prayer.1 > $(DESTDIR)$(LOCAL_PREFIX)/share/man/man1/next-prayer.1
+	chmod 750 $(DESTDIR)$(HOME)
+	chmod 754 $(DESTDIR)$(LOCAL_PREFIX)
+	chmod 754 $(DESTDIR)$(LOCAL_PREFIX)/bin
+	chmod 754 $(DESTDIR)$(LOCAL_PREFIX)/share
 	@printf "%b" "$(CYAN)next-prayer$(GREEN) installed successfully!$(NC)\n"
 
 uninstall:
