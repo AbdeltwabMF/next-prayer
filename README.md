@@ -1,3 +1,4 @@
+<div align="center"><img src="assets/next-prayer.png" width=300 alt="next prayer logo" /></div>
 <h1 align="center" color="Magenta">Next Prayer</h1>
 
 <h4 align="center"> <em>Islamic prayers reminder for your *nix status bar.</em> </h4>
@@ -46,7 +47,7 @@
 *If you have any improvements, do not hesitate to post an [issue](https://github.com/AbdeltwabMF/next-prayer/issues/new/) or make a [pull request](https://github.com/AbdeltwabMF/next-prayer/pulls).*
 *Your support is very much appreciated!* [star on GitHub](https://github.com/AbdeltwabMF/next-prayer/stargazers)
 
-# Usage
+## :thinking: Usage
 
 ```bash
 Usage: next-prayer [options...]
@@ -63,8 +64,6 @@ Options:
   --hijri      Show hijri date.
   --hybrid     The elapsed time since the previous prayer as far as the elapsed time <= THRESHOLD.
 ```
-
----
 
 # Installation
 
@@ -167,7 +166,31 @@ border_left=0
 :eyes: If you're using `the docker version` Add `docker run --rm next-prayer`
 at the very beginning of the command.<br>
 
+## :hatching\_chick: Contributors
 
-# [License](LICENSE)
+<table>
+  <tr>
+    <td align="center">
+        <a href="https://abdeltwabmf.github.io">
+        <img src="https://avatars.githubusercontent.com/u/55063723?v=4?s=100" width="100px;" alt="Abdeltwabmf"/><br />
+            <sub><b>Abd El-Twab M. Fakhry</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://mazzensaadd.github.io">
+        <img src="https://avatars.githubusercontent.com/u/69648110?v=4?s=100" width="100px;" alt="mazzensaadd"/><br />
+            <sub><b>Mazen Saad</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/MustafaAmer-1">
+        <img src="https://avatars.githubusercontent.com/u/53836898?v=4?s=100" width="100px;" alt="MustafaAmer-1"/><br />
+            <sub><b>Mustafa Amer</b></sub>
+        </a>
+    </td>
+  </tr>
+</table>
+
+## :warning: License
 
 Licensed under the [GPL-v3 License](LICENSE).
