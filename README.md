@@ -41,7 +41,7 @@
 
 <br />
 
-*If you have any improvements, do not hesitate to post an [issue](https://github.com/AbdeltwabMF/next-prayer/issues/new/) or make a [pull request](https://github.com/AbdeltwabMF/next-prayer/pulls). Your support is very much appreciated! [star on GitHub](https://github.com/AbdeltwabMF/next-prayer/stargazers)*
+_If you have any improvements, do not hesitate to post an [issue](https://github.com/AbdeltwabMF/next-prayer/issues/new/) or make a [pull request](https://github.com/AbdeltwabMF/next-prayer/pulls). Your support is very much appreciated! [star on GitHub](https://github.com/AbdeltwabMF/next-prayer/stargazers)_
 
 ## Installation
 
@@ -56,14 +56,14 @@ As for Other distros (e.g Ubuntu, ...) run the following commands:
 ```bash
 git clone https://github.com/abdeltwabmf/next-prayer.git
 cd next-prayer
-make all clean install
+make all install clean
 ```
 
 As for Windows or Mac you probably end up using the `Docker` version <br />
 
 &nbsp; &nbsp; You have two choices:
 
-  1. Use [***Docker Hub***](https://hub.docker.com/r/abdeltwabmf/next-prayer) image by running the following commands:
+1. Use [**_Docker Hub_**](https://hub.docker.com/r/abdeltwabmf/next-prayer) image by running the following commands:
 
 ```bash
 docker pull abdeltwabmf/next-prayer
@@ -71,7 +71,7 @@ docker tag abdeltwabmf/next-prayer next-prayer
 docker run --rm next-prayer next-prayer --version
 ```
 
-  2. Build it yourself by running the following commands:
+2. Build it yourself by running the following commands:
 
 ```bash
 git clone https://github.com/abdeltwabmf/next-prayer.git
@@ -100,21 +100,21 @@ Options:
   --hybrid     The elapsed time since the previous prayer as far as the elapsed time <= THRESHOLD.
 ```
 
-Use `next-prayer` options with *docker* as follows:
+Use `next-prayer` options with _docker_ as follows:
 
 <pre><code>docker run --rm next-prayer next-prayer [options...]</code></pre>
 
 ## Configuration
 
-:warning: ***Only if you're using DockerHub image***
+:warning: **_Only if you're using DockerHub image_**
 
-  1. After updating your configuration file save it locally and run the following command to fetch API data:
+1. After updating your configuration file save it locally and run the following command to fetch API data:
 
 ```dockerfile
 docker run --rm -v /path/to/your/config:/home/nextprayer/.config/next-prayer/np_config.py -v /path/to/your/data:/home/nextprayer/.local/share/next-prayer next-prayer np_fetch.py
 ```
 
-  2. Afterword run the following command:
+2. Afterword run the following command:
 
 ```dockerfile
 docker run --rm -v /path/to/your/data:/home/nextprayer/.local/share/next-prayer next-prayer next-prayer [options...]
@@ -124,18 +124,18 @@ docker run --rm -v /path/to/your/data:/home/nextprayer/.local/share/next-prayer 
 
 Here are some examples of how to setup the status bar for your distro.
 
-[***dwmblocks***](https://github.com/torrinfail/dwmblocks)
+[**_dwmblocks_**](https://github.com/torrinfail/dwmblocks)
 
 :star2: Add this 4-element Block to the blocks[] array in your config.h.
 
-``` c
+```c
 static const Block blocks[] = {
   /*Icon*/  /*Command*/              /*Update Interval*/  /*Update Signal*/
   {"🕌 ",    "next-prayer --hybrid",  29,                  0}
 }
 ```
 
-[***i3blocks***](https://github.com/vivien/i3blocks)
+[**_i3blocks_**](https://github.com/vivien/i3blocks)
 
 :star2: Add this section to your i3blocks config file.<br>
 
@@ -154,7 +154,7 @@ border_left=0
 
 :eyes: If you're using the docker version Add `docker run --rm next-prayer` at the very beginning of your command.
 
-## :hatching\_chick: Contributors
+## :hatching_chick: Contributors
 
 <table>
   <tr>
