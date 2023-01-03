@@ -39,4 +39,9 @@ np_main
 *.pyc
 *.pyo
 .mypy_cache
+
+# AUR
 .SRCINFO
+
+# Cmake
+build
