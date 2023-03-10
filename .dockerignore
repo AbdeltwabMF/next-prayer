@@ -1,0 +1,11 @@
+assets
+AUR
+CODE-OF-CONDUCT.md
+.git
+.github
+.gitignore
+.gitmodules
+LICENSE
+.mypy_cache
+README.md
+data
