@@ -378,4 +378,3 @@ latitude:
 longitude:
 year:
 method:
-
