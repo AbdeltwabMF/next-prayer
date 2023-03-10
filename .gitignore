@@ -30,7 +30,7 @@
 *.exe
 *.out
 *.app
-np_main
+main.cpp
 
 # Logs
 *.log
