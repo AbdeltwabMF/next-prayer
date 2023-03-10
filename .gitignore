@@ -45,3 +45,6 @@ np_main
 
 # Cmake
 build
+
+# Config
+.vscode

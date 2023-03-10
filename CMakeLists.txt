@@ -26,12 +26,13 @@ CPMAddPackage(
 
 # ---- Create executable ----
 add_executable(${PROJECT_NAME}
-  ${CMAKE_CURRENT_SOURCE_DIR}/source/main.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/source/cJSON.c
+  ${CMAKE_CURRENT_SOURCE_DIR}/source/next_prayer.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/include/constants.h
   ${CMAKE_CURRENT_SOURCE_DIR}/include/argh.h
   ${CMAKE_CURRENT_SOURCE_DIR}/include/cJSON.h
   ${CMAKE_CURRENT_SOURCE_DIR}/include/http.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/next_prayer.h
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
