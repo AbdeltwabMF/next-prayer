@@ -1,14 +1,17 @@
 #include <next_prayer.h>
 
 #include <stdio.h>
+#include <assert.h>
 
 #include <fmt/core.h>
+#define HTTP_IMPLEMENTATION
+#include <http.h>
 
-namespace np_prayer
+namespace nxpr
 {
   Prayer next(Time current_time)
   {
-    auto res = Prayer{PRAYER_NAME_UNKNOWN, np_time::TIME_MAX};
+    auto res = Prayer{PRAYER_NAME_UNKNOWN, TIME_MAX};
     for (auto &[name, timing]: prayers)
     {
       if (current_time < timing)
@@ -31,7 +34,7 @@ namespace np_prayer
 
   Prayer previous(Time current_time)
   {
-    auto res = Prayer{PRAYER_NAME_UNKNOWN, np_time::TIME_MIN};
+    auto res = Prayer{PRAYER_NAME_UNKNOWN, TIME_MIN};
     for (auto &[name, timing]: prayers)
     {
       if (timing < current_time)
@@ -51,17 +54,53 @@ namespace np_prayer
 
     return res;
   }
-} // namespace np_prayer
 
-namespace np_file
-{
-  void read(const char* path)
+  Prayer* read(const char* file_name)
   {
-    FILE* handle = fopen(path, "rw");
+    FILE* handle = fopen(file_name, "r");
     Later([&](){ fclose(handle); });
-    FMT_ASSERT(handle != nullptr, "[FILE ERROR] Can not open file");
+    assert(handle != nullptr);
 
+    Prayer* res;
 
+    return res;
   }
-} // namespace np_file
 
+  void write(const char* file_name)
+  {
+    FILE* handle = fopen(file_name, "w");
+    Later([&](){ fclose(handle); });
+    assert(handle != nullptr);
+  }
+
+  char* get(const char* url)
+  {
+    http_t* request = http_get(url, nullptr);
+    Later([&](){ http_release(request); });
+    if (request == nullptr)
+    {
+      fmt::print("Invalid request.\n");
+      return nullptr;
+    }
+
+    http_status_t status = HTTP_STATUS_PENDING;
+    while (status == HTTP_STATUS_PENDING)
+    {
+      status = http_process(request);
+    }
+
+    if (status == HTTP_STATUS_FAILED)
+    {
+      fmt::print("HTTP request failed ({}): {}.\n", request->status_code, request->reason_phrase);
+      return nullptr;
+    }
+
+    return (char*)request->response_data;
+  }
+}
+
+
+int main(int argc, char const *argv[])
+{
+  return 0;
+}
