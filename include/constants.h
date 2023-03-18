@@ -22,3 +22,5 @@ const char* BOLD_CYAN = "\033[1;36m";
 const char* BOLD_WHITE = "\033[1;37m";
 
 const char* VERSION = "v0.5.0";
+
+const char* base_url = "http://api.aladhan.com/v1/calendar/";

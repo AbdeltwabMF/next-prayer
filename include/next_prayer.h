@@ -64,5 +64,5 @@ namespace nxpr
   Prayer* read(const char* file_name);
   void write(const char* file_name);
 
-  char* get(const char* url);
+  char* fetch(const char* url);
 }

@@ -1,4 +1,6 @@
 #include <next_prayer.h>
+#include <constants.h>
+#include <config.h>
 
 #include <assert.h>
 #include <stdio.h>
@@ -6,6 +8,7 @@
 #include <fmt/core.h>
 #define HTTP_IMPLEMENTATION
 #include <http.h>
+#include <cJSON.h>
 
 namespace nxpr
 {
@@ -58,10 +61,10 @@ namespace nxpr
   Prayer* read(const char* file_name)
   {
     FILE* handle = fopen(file_name, "r");
-    Later([&]() { fclose(handle); });
     assert(handle != nullptr);
+    Later L1 = Later([&]() { ::fclose(handle); });
 
-    Prayer* res;
+    Prayer* res = nullptr;
 
     return res;
   }
@@ -69,14 +72,28 @@ namespace nxpr
   void write(const char* file_name)
   {
     FILE* handle = fopen(file_name, "w");
-    Later([&]() { fclose(handle); });
     assert(handle != nullptr);
+    Later L1 = Later([&]() { fclose(handle); });
+
+    std::string url_params = fmt::format("{}?{}={}&{}={}&{}={}&{}={}",
+    year,
+    "latitude", latitude,
+    "longitude", longitude,
+    "method", method,
+    "adjustment", adjustment);
+
+    fmt::print(fmt::format("{}{}", base_url, url_params).c_str());
+    auto response = fetch(fmt::format("{}{}", base_url, url_params).c_str());
+    printf("%s",response);
+
+    auto json = cJSON_Parse(response);
+    Later L2 = Later([&]() { cJSON_free(json); });
   }
 
-  char* get(const char* url)
+  char* fetch(const char* url)
   {
     http_t* request = http_get(url, nullptr);
-    Later([&]() { http_release(request); });
+    Later L1 = Later([&]() { http_release(request); });
     if (request == nullptr)
     {
       fmt::print("Invalid request.\n");
@@ -96,8 +113,16 @@ namespace nxpr
       return nullptr;
     }
 
-    return (char*)request->response_data;
+    auto response = (char*)malloc(request->response_size + 1);
+    ::memcpy_s(response, request->response_size, request->response_data, request->response_size);
+    response[request->response_size] = '\0';
+
+    return response;
   }
 } // namespace nxpr
 
-int main(int argc, char const* argv[]) { return 0; }
+int main(int argc, char const* argv[])
+{
+  nxpr::write("file.txt");
+  return 0;
+}
